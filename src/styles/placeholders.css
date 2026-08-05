@@ -1,0 +1,21 @@
+/* ==================== PLACEHOLDER ====================
+   아직 확정되지 않은 행사 고유 콘텐츠(스폰서 로고 등) 자리를 표시하는 스타일.
+   원본 style.css / works.css는 수정하지 않기 위해 별도 파일로 분리했다.
+   실제 콘텐츠가 채워지면 이 클래스는 자동으로 렌더링되지 않는다.
+   ==================================================== */
+
+.placeholder-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 clamp(12px, 1vw, 20px);
+  border: 1px dashed rgba(232, 67, 147, 0.45);
+  border-radius: 6px;
+  background: rgba(232, 67, 147, 0.04);
+  color: #c07ba0;
+  font-size: clamp(12px, 0.83vw, 14px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}

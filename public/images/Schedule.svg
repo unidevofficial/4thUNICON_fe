@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 966.85 632.88">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill: #ff4fa6;
+      }
+
+      .cls-2, .cls-5 {
+        font-family: SUITVariable-ExtraBold, 'SUIT Variable';
+        font-variation-settings: 'wght' 800;
+        font-weight: 700;
+      }
+
+      .cls-2, .cls-5, .cls-6 {
+        font-size: 34px;
+      }
+
+      .cls-3, .cls-6, .cls-7 {
+        font-family: SUITVariable-Heavy, 'SUIT Variable';
+        font-variation-settings: 'wght' 900;
+        font-weight: 800;
+      }
+
+      .cls-3, .cls-7 {
+        font-size: 27px;
+      }
+
+      .cls-8 {
+        stroke-linecap: square;
+      }
+
+      .cls-8, .cls-9, .cls-10, .cls-11 {
+        fill: none;
+        stroke: #ff4fa6;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-8, .cls-10, .cls-11 {
+        stroke-width: 4px;
+      }
+
+      .cls-5, .cls-6, .cls-7 {
+        fill: #fff;
+      }
+
+      .cls-9, .cls-10 {
+        stroke-linecap: round;
+      }
+
+      .cls-4 {
+        opacity: .5;
+      }
+
+      .cls-12 {
+        fill: #fc93c6;
+      }
+
+      .cls-13 {
+        fill: #ffe3f4;
+        opacity: .8;
+      }
+    </style>
+  </defs>
+  <rect class="cls-12" x="233.3" y="502.55" width="729.29" height="123.49"/>
+  <rect class="cls-4" x="234.73" y="31.57" width="727.31" height="126.31"/>
+  <rect class="cls-13" x="233.3" y="185.01" width="728.76" height="294.07"/>
+  <line class="cls-8" x1="158.11" y1="33.51" x2="959.97" y2="29.65"/>
+  <line class="cls-8" x1="209.78" y1="157.8" x2="960.14" y2="157.8"/>
+  <line class="cls-8" x1="209.22" y1="624.85" x2="960.14" y2="624.85"/>
+  <line class="cls-11" x1="209.99" y1="478.76" x2="960.14" y2="478.76"/>
+  <rect class="cls-1" x="2.29" y="2.61" width="198.12" height="60.15" rx="30.08" ry="30.08"/>
+  <text class="cls-6" transform="translate(53.87 44.98)"><tspan x="0" y="0">10:00</tspan></text>
+  <line class="cls-8" x1="158.28" y1="187.91" x2="960.14" y2="184.06"/>
+  <rect class="cls-1" x="2.47" y="157.01" width="198.12" height="60.15" rx="30.08" ry="30.08"/>
+  <text class="cls-6" transform="translate(55.08 199.38)"><tspan x="0" y="0">10:30</tspan></text>
+  <line class="cls-10" x1="158.28" y1="506.45" x2="960.14" y2="502.59"/>
+  <rect class="cls-1" x="2.47" y="475.55" width="198.12" height="60.15" rx="30.08" ry="30.08"/>
+  <text class="cls-6" transform="translate(55.59 517.92)"><tspan x="0" y="0">17:00</tspan></text>
+  <text class="cls-5" transform="translate(269.72 107.87)"><tspan x="0" y="0">개회식</tspan></text>
+  <text class="cls-2" transform="translate(269.89 340.08)"><tspan x="0" y="0">게임 시연</tspan></text>
+  <text class="cls-7" transform="translate(745.32 107.87)"><tspan x="0" y="0">10:00 - 10:30</tspan></text>
+  <text class="cls-5" transform="translate(269.89 578.02)"><tspan x="0" y="0">시상 및 폐막식</tspan></text>
+  <text class="cls-7" transform="translate(745.32 578.02)"><tspan x="0" y="0">17:00 - 18:00</tspan></text>
+  <text class="cls-3" transform="translate(745.32 341.29)"><tspan x="0" y="0">10:30 - 17:00</tspan></text>
+  <line class="cls-9" x1="234.16" y1="33.77" x2="234.16" y2="625.27"/>
+  <line class="cls-9" x1="209.65" y1="66.24" x2="233.95" y2="66.24"/>
+  <line class="cls-9" x1="209.65" y1="97.01" x2="233.95" y2="97.01"/>
+  <line class="cls-9" x1="209.82" y1="127.78" x2="234.12" y2="127.78"/>
+  <line class="cls-9" x1="209.82" y1="158.56" x2="234.12" y2="158.56"/>
+  <line class="cls-9" x1="209.82" y1="214.26" x2="234.12" y2="214.26"/>
+  <line class="cls-9" x1="209.82" y1="243.8" x2="234.12" y2="243.8"/>
+  <line class="cls-9" x1="209.82" y1="273.33" x2="234.12" y2="273.33"/>
+  <line class="cls-9" x1="209.82" y1="302.86" x2="234.12" y2="302.86"/>
+  <line class="cls-9" x1="209.82" y1="536.71" x2="234.12" y2="536.71"/>
+  <line class="cls-9" x1="209.82" y1="566.25" x2="234.12" y2="566.25"/>
+  <line class="cls-9" x1="209.82" y1="595.78" x2="234.12" y2="595.78"/>
+  <line class="cls-9" x1="209.82" y1="625.31" x2="234.12" y2="625.31"/>
+  <line class="cls-9" x1="209.82" y1="332.4" x2="234.12" y2="332.4"/>
+  <line class="cls-9" x1="209.82" y1="361.93" x2="234.12" y2="361.93"/>
+  <line class="cls-9" x1="209.82" y1="391.46" x2="234.12" y2="391.46"/>
+  <line class="cls-9" x1="209.82" y1="420.99" x2="234.12" y2="420.99"/>
+  <line class="cls-9" x1="209.82" y1="450.53" x2="234.12" y2="450.53"/>
+  <line class="cls-9" x1="209.82" y1="480.06" x2="234.12" y2="480.06"/>
+</svg>
