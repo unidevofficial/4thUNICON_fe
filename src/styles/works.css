@@ -340,6 +340,13 @@
 .overview-map {
   max-width: clamp(300px, 55vw, 900px);
 }
+.overview-map__iframe{
+  display: block;
+  width: 100%;
+  height: clamp(300px, 45vw, 500px);
+  border: 0;
+  border-radius: clamp(8px, 0.8vw, 12px);
+}
 
 /* ── OVERVIEW: 주최 및 스폰서 (메인 sponsor 재사용) ── */
 .overview-sponsor__wrap {

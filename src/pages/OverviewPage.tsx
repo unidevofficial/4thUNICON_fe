@@ -1,8 +1,7 @@
-import { ImageFrame } from '../components/ImageFrame';
 import { SectionBadge } from '../components/SectionBadge';
 import { SponsorBox } from '../components/SponsorBox';
 import { SubPageLayout } from '../components/SubPageLayout';
-import { EVENT, VENUE_MAP_IMAGE } from '../data/site';
+import { EVENT, VENUE_MAP_EMBED_URL} from '../data/site';
 
 export function OverviewPage() {
   return (
@@ -49,12 +48,17 @@ export function OverviewPage() {
             {EVENT.place}
           </p>
         </div>
-        <ImageFrame
-          src={VENUE_MAP_IMAGE}
-          alt="오시는 길 지도"
-          placeholderLabel="지도 이미지"
-          className="overview-map"
-        />
+        <div className="works-booth overview-map">
+          <div className="works-booth__frame">
+            <iframe 
+              src={VENUE_MAP_EMBED_URL}
+              className="overview-map__iframe"
+              title="경기창조경제혁신센터 위치 지도"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"/>
+          </div>
+        </div>
       </section>
 
       {/* ── 주최 및 스폰서 ── */}

@@ -6,7 +6,7 @@
 export const CONTACT_EMAIL = 'officialunidev@gmail.com';
 
 export const EVENT = {
-  date: '2026.08.15 (화) 10:00 ~ 18:00',
+  date: '2026.08.25 (화) 10:00 ~ 18:00',
   place: '경기창조경제혁신센터 국제회의장',
 } as const;
 
@@ -48,8 +48,8 @@ export const SOCIAL_LINKS: {
   icon: string;
   href: string | null;
 }[] = [
-  { label: '카카오톡', icon: '/images/icon-kakao.png', href: null },
-  { label: '인스타그램', icon: '/images/icon-instagram.png', href: null },
+  { label: '카카오톡', icon: '/images/icon-kakao.png', href: "https://pf.kakao.com/_LxgSvn" },
+  { label: '인스타그램', icon: '/images/icon-instagram.png', href: "https://www.instagram.com/unidev.official" },
 ];
 
 /**
@@ -57,8 +57,8 @@ export const SOCIAL_LINKS: {
  */
 export const ABOUT_EXTERNAL_LINKS: { label: string; href: string | null }[] = [
   { label: 'UNIDEV 공식 홈페이지', href: null },
-  { label: '카카오톡 채널', href: null },
-  { label: 'Instagram', href: null },
+  { label: '카카오톡 채널', href: "https://pf.kakao.com/_LxgSvn" },
+  { label: 'Instagram', href: "https://www.instagram.com/unidev.official" },
 ];
 
 /**
@@ -67,6 +67,7 @@ export const ABOUT_EXTERNAL_LINKS: { label: string; href: string | null }[] = [
 export const BOOTH_MAP_IMAGE: string | null = null;
 
 /**
- * TODO(행사 정보 미확정): 오시는 길 지도 이미지가 나오면 경로를 채운다. (예: '/images/venue-map.png')
+ * Google 지도 삽입용 URL
  */
-export const VENUE_MAP_IMAGE: string | null = null;
+export const VENUE_MAP_EMBED_URL =
+"https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x357ca7e540109215%3A0x7efba1ae147d3d1f!2z6rK96riw7LC97KGw6rK97KCc7ZiB7Iug7IS87YSw!5e0!3m2!1sko!2skr!4v1786300831324!5m2!1sko!2skr"
