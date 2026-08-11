@@ -4,8 +4,17 @@ import { NAV_ITEMS } from '../data/site';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // 헤더 바깥을 클릭하면 모바일 메뉴를 닫는다.
   useEffect(() => {
@@ -20,7 +29,10 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <header ref={headerRef} className={`header${isOpen ? ' is-open' : ''}`}>
+    <header
+      ref={headerRef}
+      className={`header${isOpen ? ' is-open' : ''}${isScrolled ? ' is-scrolled' : ''}`}
+    >
       <div className="header__inner">
         <Link to="/" className="header__logo">
           <img src="/images/Unidev.png" alt="UNIDEV" className="header__logo-img" />
