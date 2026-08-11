@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ImageFrame } from '../components/ImageFrame';
 import { SectionBadge } from '../components/SectionBadge';
 import { SubPageLayout } from '../components/SubPageLayout';
@@ -131,7 +132,12 @@ export function WorksPage() {
 
         <div className="works-grid">
           {displayedWorks.map((work) => (
-            <article key={work.id} className="works-card">
+            <Link
+              key={work.id}
+              to={`/works/${work.id}`}
+              className="works-card"
+              aria-label={`${work.title} 상세 페이지로 이동`}
+            >
               <div
                 className="works-card__thumb"
                 style={
@@ -157,17 +163,11 @@ export function WorksPage() {
                 <p className="works-card__desc">{work.description}</p>
                 <p className="works-card__link">
                   링크:{' '}
-                  {/* TODO(행사 정보 미확정): 출품작 링크가 확정되면 앵커로 렌더링된다. */}
-                  {work.downloadUrl ? (
-                    <a href={work.downloadUrl} target="_blank" rel="noopener noreferrer">
-                      바로가기
-                    </a>
-                  ) : (
-                    <span>바로가기</span>
-                  )}
+                  {/* TODO(디자인팀 확인): 장르 표시 영역인지 상세 페이지 안내 영역인지 확인한다. */}
+                  <span>바로가기</span>
                 </p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
         {displayedWorks.length === 0 ? (
