@@ -32,11 +32,18 @@ export const WORKS: Work[] = Array.from({ length: 6 }, (_, index) => ({
   teamName: `팀명 ${index + 1}`,
   teamLogo: null,
   genres: [PLACEHOLDER_GENRES[index % PLACEHOLDER_GENRES.length]],
-  platforms: [],
-  videoUrl: null,
-  bannerImage: null,
-  galleryImages: [],
-  downloadUrl: null,
+  platforms: index === 0 ? ['pc', 'web'] : [],
+  // TODO(실제 참가작 반영): 첫 번째 항목의 URL은 영상 임베드 확인용 테스트 값이다.
+  videoUrl:
+    index === 0 ? 'https://www.youtube.com/watch?v=V6HThHb14Ho' : null,
+  // TODO(실제 참가작 반영): 첫 번째 항목의 이미지는 상세 기능 확인용 테스트 값이다.
+  bannerImage: index === 0 ? '/images/banner.png' : null,
+  galleryImages:
+    index === 0
+      ? ['/images/banner.png', '/images/AboutLogo.png', '/images/UniconLogo.png']
+      : [],
+  // TODO(실제 참가작 반영): 첫 번째 항목의 경로는 다운로드 버튼 확인용 테스트 값이다.
+  downloadUrl: index === 0 ? '/images/banner.png' : null,
   createdAt: `2026-08-${String(index + 1).padStart(2, '0')}T00:00:00.000Z`,
 }));
 

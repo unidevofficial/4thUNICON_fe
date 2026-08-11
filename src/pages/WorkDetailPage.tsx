@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { SectionBadge } from '../components/SectionBadge';
 import { SubPageLayout } from '../components/SubPageLayout';
@@ -14,9 +15,57 @@ const PLATFORM_LABEL = {
   web: 'Web',
 } as const;
 
+function getYouTubeEmbedUrl(videoUrl: string | null) {
+  if (!videoUrl) return null;
+
+  try {
+    const url = new URL(videoUrl);
+    const hostname = url.hostname.replace(/^www\./, '');
+    let videoId = '';
+
+    if (hostname === 'youtu.be') {
+      videoId = url.pathname.split('/').filter(Boolean)[0] ?? '';
+    } else if (hostname === 'youtube.com' || hostname.endsWith('.youtube.com')) {
+      if (url.pathname === '/watch') {
+        videoId = url.searchParams.get('v') ?? '';
+      } else if (url.pathname.startsWith('/shorts/') || url.pathname.startsWith('/embed/')) {
+        videoId = url.pathname.split('/')[2] ?? '';
+      }
+    }
+
+    return /^[A-Za-z0-9_-]{11}$/.test(videoId)
+      ? `https://www.youtube-nocookie.com/embed/${videoId}`
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 export function WorkDetailPage() {
   const { id } = useParams<{ id: string }>();
   const work = WORKS.find((item) => item.id === id);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSelectedImage(null);
+  }, [id]);
+
+  useEffect(() => {
+    if (!selectedImage) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelectedImage(null);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [selectedImage]);
 
   if (!work) {
     return (
@@ -31,6 +80,8 @@ export function WorkDetailPage() {
       </SubPageLayout>
     );
   }
+
+  const embedUrl = getYouTubeEmbedUrl(work.videoUrl);
 
   return (
     <SubPageLayout titleImage="/images/WorksTitle.png" titleAlt="참가작품">
@@ -72,6 +123,21 @@ export function WorkDetailPage() {
               {work.description ?? '작품 설명이 준비 중입니다.'}
             </p>
 
+            {embedUrl ? (
+              <section className="work-detail__video" aria-labelledby="work-video-title">
+                <h3 id="work-video-title">작품 영상</h3>
+                <div className="work-detail__video-frame">
+                  <iframe
+                    src={embedUrl}
+                    title={`${work.title} 작품 영상`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </section>
+            ) : null}
+
             {work.videoUrl || work.downloadUrl ? (
               <div className="work-detail__actions">
                 {work.videoUrl ? (
@@ -80,15 +146,59 @@ export function WorkDetailPage() {
                   </a>
                 ) : null}
                 {work.downloadUrl ? (
-                  <a href={work.downloadUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={work.downloadUrl} target="_blank" rel="noopener noreferrer" download>
                     작품 다운로드
                   </a>
                 ) : null}
               </div>
             ) : null}
+
+            <section className="work-detail__gallery" aria-labelledby="work-gallery-title">
+              <h3 id="work-gallery-title">갤러리</h3>
+              {work.galleryImages.length > 0 ? (
+                <div className="work-detail__gallery-grid">
+                  {work.galleryImages.map((imageUrl, index) => (
+                    <button
+                      key={`${imageUrl}-${index}`}
+                      type="button"
+                      className="work-detail__gallery-item"
+                      onClick={() => setSelectedImage(imageUrl)}
+                      aria-label={`${work.title} 갤러리 이미지 ${index + 1} 크게 보기`}
+                    >
+                      <img src={imageUrl} alt={`${work.title} 갤러리 이미지 ${index + 1}`} />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="work-detail__media-empty">등록된 갤러리 이미지가 없습니다.</p>
+              )}
+            </section>
           </div>
         </article>
       </section>
+
+      {selectedImage ? (
+        <div
+          className="work-gallery-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${work.title} 갤러리 이미지 크게 보기`}
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="work-gallery-modal__content" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="work-gallery-modal__close"
+              onClick={() => setSelectedImage(null)}
+              aria-label="확대 이미지 닫기"
+              autoFocus
+            >
+              ×
+            </button>
+            <img src={selectedImage} alt={`${work.title} 갤러리 확대 이미지`} />
+          </div>
+        </div>
+      ) : null}
     </SubPageLayout>
   );
 }
