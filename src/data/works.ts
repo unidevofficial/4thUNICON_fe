@@ -1,12 +1,24 @@
+export type TeamType = 'challenger' | 'rookie';
+
+export type Platform = 'pc' | 'mobile' | 'web';
+
 export type Work = {
   id: string;
-  /** 썸네일 경로. null이면 빈 썸네일 박스(원본 디자인과 동일)로 렌더링된다. */
-  thumbnail: string | null;
-  genre: string;
-  team: string;
-  description: string;
-  link: string | null;
+  title: string;
+  description: string | null;
+  teamType: TeamType;
+  teamName: string | null;
+  teamLogo: string | null;
+  genres: string[];
+  platforms: Platform[];
+  videoUrl: string | null;
+  bannerImage: string | null;
+  galleryImages: string[];
+  downloadUrl: string | null;
+  createdAt: string;
 };
+
+const PLACEHOLDER_GENRES = ['액션', 'RPG', '퍼즐'] as const;
 
 /**
  * TODO(행사 정보 미확정): 참가작 목록이 확정되면 이 배열을 실제 데이터로 교체한다.
@@ -14,24 +26,31 @@ export type Work = {
  */
 export const WORKS: Work[] = Array.from({ length: 6 }, (_, index) => ({
   id: `placeholder-${index + 1}`,
-  thumbnail: null,
-  genre: '장르명',
-  team: '팀명 팀원명',
+  title: `작품명 ${index + 1}`,
   description: '작품 설명이 들어갑니다. 간단한 소개 텍스트입니다.',
-  link: null,
+  teamType: index % 2 === 0 ? 'challenger' : 'rookie',
+  teamName: `팀명 ${index + 1}`,
+  teamLogo: null,
+  genres: [PLACEHOLDER_GENRES[index % PLACEHOLDER_GENRES.length]],
+  platforms: [],
+  videoUrl: null,
+  bannerImage: null,
+  galleryImages: [],
+  downloadUrl: null,
+  createdAt: `2026-08-${String(index + 1).padStart(2, '0')}T00:00:00.000Z`,
 }));
 
 /** TODO(행사 정보 미확정): 실제 출품작 장르가 확정되면 옵션을 교체한다. */
 export const GENRE_OPTIONS = [
-  { value: 'action', label: '액션' },
-  { value: 'rpg', label: 'RPG' },
-  { value: 'puzzle', label: '퍼즐' },
+  { value: '액션', label: '액션' },
+  { value: 'RPG', label: 'RPG' },
+  { value: '퍼즐', label: '퍼즐' },
 ];
 
 /** TODO(행사 정보 미확정): 참가팀 유형 분류가 확정되면 옵션을 교체한다. */
 export const TEAM_TYPE_OPTIONS = [
-  { value: 'student', label: '학생' },
-  { value: 'indie', label: '인디' },
+  { value: 'challenger', label: '챌린저' },
+  { value: 'rookie', label: '루키' },
 ];
 
 export const SORT_OPTIONS = [

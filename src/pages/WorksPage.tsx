@@ -5,13 +5,45 @@ import { SubPageLayout } from '../components/SubPageLayout';
 import { BOOTH_MAP_IMAGE } from '../data/site';
 import { GENRE_OPTIONS, SORT_OPTIONS, TEAM_TYPE_OPTIONS, WORKS } from '../data/works';
 
+function shuffleWorks() {
+  const shuffled = [...WORKS];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
 export function WorksPage() {
-  // TODO(행사 정보 미확정): 참가작 데이터(WORKS)에 장르/팀 유형/등록일이 채워지면
-  // 아래 상태값으로 검색·필터·정렬 파이프라인을 연결한다.
   const [keyword, setKeyword] = useState('');
   const [genre, setGenre] = useState('');
   const [teamType, setTeamType] = useState('');
   const [sort, setSort] = useState('random');
+  const [randomizedWorks] = useState(shuffleWorks);
+
+  const normalizedKeyword = keyword.trim().toLowerCase();
+  const baseWorks = sort === 'random' ? randomizedWorks : WORKS;
+  const filteredWorks = baseWorks.filter((work) => {
+    const matchesKeyword =
+      normalizedKeyword === '' ||
+      work.title.toLowerCase().includes(normalizedKeyword) ||
+      (work.teamName ?? '').toLowerCase().includes(normalizedKeyword);
+    const matchesGenre = genre === '' || work.genres.includes(genre);
+    const matchesTeamType = teamType === '' || work.teamType === teamType;
+
+    return matchesKeyword && matchesGenre && matchesTeamType;
+  });
+
+  const displayedWorks =
+    sort === 'name'
+      ? [...filteredWorks].sort((a, b) => a.title.localeCompare(b.title, 'ko'))
+      : sort === 'newest'
+        ? [...filteredWorks].sort(
+            (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+          )
+        : filteredWorks;
 
   return (
     <SubPageLayout titleImage="/images/WorksTitle.png" titleAlt="참가작품">
@@ -98,14 +130,14 @@ export function WorksPage() {
         </div>
 
         <div className="works-grid">
-          {WORKS.map((work) => (
+          {displayedWorks.map((work) => (
             <article key={work.id} className="works-card">
               <div
                 className="works-card__thumb"
                 style={
-                  work.thumbnail
+                  work.bannerImage
                     ? {
-                        backgroundImage: `url(${work.thumbnail})`,
+                        backgroundImage: `url(${work.bannerImage})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }
@@ -113,18 +145,21 @@ export function WorksPage() {
                 }
               />
               <div className="works-card__body">
-                <p className="works-card__genre">{work.genre}</p>
+                <p className="works-card__title">{work.title}</p>
                 <p className="works-card__team">
-                  {/* TODO(행사 정보 미확정): 팀 로고가 준비되면 기본 UNIDEV 로고를 교체한다. */}
-                  <img src="/images/Unidev.png" alt="" className="works-card__team-icon" />
-                  {work.team}
+                  <img
+                    src={work.teamLogo ?? '/images/Unidev.png'}
+                    alt={`${work.teamName ?? '참가팀'} 로고`}
+                    className="works-card__team-icon"
+                  />
+                  {work.teamName ?? '팀명 미정'}
                 </p>
                 <p className="works-card__desc">{work.description}</p>
                 <p className="works-card__link">
                   링크:{' '}
                   {/* TODO(행사 정보 미확정): 출품작 링크가 확정되면 앵커로 렌더링된다. */}
-                  {work.link ? (
-                    <a href={work.link} target="_blank" rel="noopener noreferrer">
+                  {work.downloadUrl ? (
+                    <a href={work.downloadUrl} target="_blank" rel="noopener noreferrer">
                       바로가기
                     </a>
                   ) : (
@@ -135,6 +170,11 @@ export function WorksPage() {
             </article>
           ))}
         </div>
+        {displayedWorks.length === 0 ? (
+          <p className="works-empty" role="status">
+            검색 조건에 맞는 참가 작품이 없습니다.
+          </p>
+        ) : null}
       </section>
     </SubPageLayout>
   );
