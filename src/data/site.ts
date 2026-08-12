@@ -6,9 +6,20 @@
 export const CONTACT_EMAIL = 'officialunidev@gmail.com';
 
 export const EVENT = {
-  date: '2026.08.15 (화) 10:00 ~ 18:00',
-  place: '경기창조경제혁신센터 국제회의장',
+  date: '2026.08.25 (화) 10:00 ~ 18:00',
+  place: '경기창조경제혁신센터 B2 국제회의장',
+  address: '경기도 성남시 분당구 대왕판교로645번길 12 1F KR 5F 경기창조경제혁신센터',
 } as const;
+
+/** 오시는 길 구글맵 임베드 URL (API 키 없이 동작하는 공개 임베드). */
+export const VENUE_MAP_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(
+  EVENT.address,
+)}&hl=ko&z=17&output=embed`;
+
+/** 구글맵 새 탭에서 열기용 링크. */
+export const VENUE_MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  EVENT.address,
+)}`;
 
 export type NavItem = {
   label: string;
@@ -29,15 +40,13 @@ export const FOOTER_LINKS: NavItem[] = [
 ];
 
 /**
- * TODO(행사 정보 미확정): 메인 스폰서가 확정되면 name/logo를 채운다.
- * logo에 경로를 넣으면 스폰서 박스와 푸터에 자동 반영된다. (예: '/images/main-sponsor.png')
+ * TODO(행사 정보 미확정): 후원사가 확정되면 name/logo를 실제 값으로 교체한다.
+ * 지금은 그리드 레이아웃 확인용 플레이스홀더 12개. 개수를 바꾸면 그리드가 자동으로 줄바꿈한다.
  */
-export const MAIN_SPONSOR: { name: string; logo: string } | null = null;
-
-/**
- * TODO(행사 정보 미확정): 후원사 목록이 확정되면 배열을 채운다.
- */
-export const SUPPORTERS: { name: string; logo: string | null }[] = [];
+export const SUPPORTERS: { name: string; logo: string | null }[] = Array.from(
+  { length: 12 },
+  (_, index) => ({ name: `후원사 ${index + 1}`, logo: '/images/Unidev.png' }),
+);
 
 /**
  * TODO(행사 정보 미확정): 공식 SNS 계정 URL이 확정되면 href를 채운다.
@@ -48,25 +57,20 @@ export const SOCIAL_LINKS: {
   icon: string;
   href: string | null;
 }[] = [
-  { label: '카카오톡', icon: '/images/icon-kakao.png', href: null },
-  { label: '인스타그램', icon: '/images/icon-instagram.png', href: null },
+  { label: '카카오톡', icon: '/images/icon-kakao.png', href: 'https://pf.kakao.com/_LxgSvn' },
+  { label: '인스타그램', icon: '/images/icon-instagram.png', href: 'https://www.instagram.com/unidev.official' },
 ];
 
 /**
  * TODO(행사 정보 미확정): UNIDEV 외부 링크 URL이 확정되면 href를 채운다.
  */
 export const ABOUT_EXTERNAL_LINKS: { label: string; href: string | null }[] = [
-  { label: 'UNIDEV 공식 홈페이지', href: null },
-  { label: '카카오톡 채널', href: null },
-  { label: 'Instagram', href: null },
+  { label: 'UNIDEV 공식 홈페이지', href: 'https://www.unidev.kr/' },
+  { label: '카카오톡 채널', href: 'https://pf.kakao.com/_LxgSvn' },
+  { label: 'Instagram', href: 'https://www.instagram.com/unidev.official' },
 ];
 
 /**
  * TODO(행사 정보 미확정): 부스 배치도 이미지가 나오면 경로를 채운다. (예: '/images/booth-map.png')
  */
 export const BOOTH_MAP_IMAGE: string | null = null;
-
-/**
- * TODO(행사 정보 미확정): 오시는 길 지도 이미지가 나오면 경로를 채운다. (예: '/images/venue-map.png')
- */
-export const VENUE_MAP_IMAGE: string | null = null;

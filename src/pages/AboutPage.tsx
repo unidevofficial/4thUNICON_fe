@@ -4,10 +4,10 @@ import { SubPageLayout } from '../components/SubPageLayout';
 import { ABOUT_EXTERNAL_LINKS } from '../data/site';
 
 const STATS = [
-  { value: '150+', label: ['UNICON', '출품작 수'] },
-  { value: '25+', label: ['UNIJAM', '작품 수'] },
-  { value: '25', label: ['소속', '동아리'] },
-  { value: '1300+', label: ['커뮤니티', '멤버 수'] },
+  { value: '150+', label: ['UNICON', '누적 출품작 수'] },
+  { value: '40+', label: ['UNIJAM', '누적 작품 수'] },
+  { value: '30', label: ['소속', '동아리'] },
+  { value: '1800+', label: ['커뮤니티', '누적 회원 수'] },
 ];
 
 const ACTIVITIES = [

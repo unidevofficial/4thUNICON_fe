@@ -1,11 +1,5 @@
 import { Link } from 'react-router-dom';
-import {
-  CONTACT_EMAIL,
-  FOOTER_LINKS,
-  MAIN_SPONSOR,
-  SOCIAL_LINKS,
-  SUPPORTERS,
-} from '../data/site';
+import { CONTACT_EMAIL, FOOTER_LINKS, SOCIAL_LINKS, SUPPORTERS } from '../data/site';
 
 export function Footer() {
   return (
@@ -23,12 +17,6 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="footer__col">
-            <h3 className="footer__heading">메인 스폰서</h3>
-            {/* TODO(행사 정보 미확정): MAIN_SPONSOR가 확정되기 전까지 '-'로 표기한다. */}
-            <p className="footer__text">{MAIN_SPONSOR?.name ?? '-'}</p>
           </div>
 
           <div className="footer__col">

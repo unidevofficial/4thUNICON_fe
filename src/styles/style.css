@@ -284,16 +284,33 @@ ul {
 }
 
 .sponsor__box {
-  /* 모바일 9-slice 조절용 (DevTools에서도 이 값만 바꾸면 됨) */
-  --sponsor-slice: 104;          /* 코너 보호 영역 (클수록 코너 큼) */
-  --sponsor-border-y: 46px;      /* 상·하 테두리 두께 */
-  --sponsor-border-x: 48px;      /* 좌·우 테두리 두께 */
+  /* 9-slice 조절용 (DevTools에서도 이 값만 바꾸면 됨) */
+  --sponsor-slice: 104;          /* 코너 보호 영역 (SVG 원본 925.53×505.62 기준 단위) */
+  /* 코너를 원본 비율 그대로 렌더링하는 두께: slice / 925.53 = 11.24% */
+  --sponsor-corner: 11.24cqw;
   --sponsor-mobile-ratio: 1.34;  /* 모바일 세로 비율 (작을수록 더 김, 9-slice로 코너 유지) */
+  /* 박스 최소 가로/세로 비율(무단위). 브레이크포인트에서 이 값만 덮어쓰면 된다 */
+  --sponsor-ratio: 1.8305;
 
   position: relative;
+  display: grid;
   width: clamp(345px, 75.9vw, 1457px);
   max-width: 100%;
-  aspect-ratio: 925.53 / 505.62;
+  /* 코너 두께·비율 스페이서를 박스 실제 너비(cqw) 기준으로 계산하기 위한 컨테이너 */
+  container-type: inline-size;
+}
+
+/*
+ * 비율 유지용 스페이서. 내용과 같은 그리드 셀에 겹쳐 두어
+ * 박스 높이 = max(비율 높이, 내용 높이)가 된다.
+ * → 후원사 줄 수가 늘어도 내용이 프레임 밖으로 넘치지 않는다 (9-slice라 코너는 그대로).
+ * 너비를 0으로 둬야 열 너비 계산에 끼어들지 않는다 (aspect-ratio + 100% 조합은 순환 참조).
+ */
+.sponsor__box::before {
+  content: '';
+  grid-area: 1 / 1;
+  width: 0;
+  height: calc(100cqw / var(--sponsor-ratio));
 }
 
 /* 흰 면 + 프레임 SVG 레이어 (같은 박스에 겹침) */
@@ -303,28 +320,37 @@ ul {
   pointer-events: none;
 }
 
+/*
+ * Fill·Frame 모두 border-image 9-slice.
+ * 배경 stretch가 아니라 9-slice라서 박스가 세로로 늘어나도 코너가 찌그러지지 않는다.
+ */
 .sponsor__box-chrome-fill,
 .sponsor__box-chrome-frame {
   position: absolute;
   inset: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--sponsor-corner);
+  border-image-slice: var(--sponsor-slice) fill;
+  border-image-repeat: stretch;
 }
 
 .sponsor__box-chrome-fill {
-  background: url('/images/SponserFrameFill.svg') center / 100% 100% no-repeat;
+  border-image-source: url('/images/SponserFrameFill.svg');
 }
 
 .sponsor__box-chrome-frame {
-  background: url('/images/SponserFrame.svg') center / 100% 100% no-repeat;
+  border-image-source: url('/images/SponserFrame.svg');
 }
 
 .sponsor__content {
   /* 셋 간격: 박스 너비 대비 비율 (1920 기준) */
-  --sponsor-section-gap: 8.2%; /* 메인 스폰서 ↔ 후원사 */
-  /* 주최 로고 확대분만큼 주최↔메인 스폰서 간격 축소 */
+  --sponsor-section-gap: 8.2%; /* 주최 ↔ 후원사 */
   --sponsor-section-gap-after-host: 4%;
   --sponsor-label-gap: 1.1%; /* 라벨 ↔ 바로 아래 로고 */
-  position: absolute;
-  inset: 0;
+  position: relative;
+  grid-area: 1 / 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -365,9 +391,34 @@ ul {
   transform: translate(-20px, -28px);
 }
 
-.sponsor__logo--main {
-  height: clamp(32px, 2.5vw, 48px);
+/*
+ * 후원사 로고 그리드.
+ * auto-fit + minmax라 폭이 좁아지면 열 수가 줄고, 넘치는 로고는 자동으로 다음 줄로 내려간다.
+ * 데스크톱 기준 6열 → 로고 12개면 정확히 2줄.
+ */
+.sponsor__logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr));
+  gap: clamp(12px, 1.4vw, 26px) clamp(12px, 1.6vw, 32px);
+  place-items: center;
+  width: min(100%, 920px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sponsor__logos-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.sponsor__logo--supporter {
+  height: clamp(28px, 2.2vw, 44px);
   width: auto;
+  max-width: 100%;
 }
 
 /* ==================== MERRY-GO-ROUND (푸터 직전) ==================== */
@@ -758,26 +809,7 @@ ul {
     max-width: none;
     margin-inline: auto;
     /* 비율↓ = 세로로 더 김. 변만 늘리고 코너는 9-slice 유지 */
-    aspect-ratio: var(--sponsor-mobile-ratio);
-  }
-
-  /* Fill·Frame 둘 다 같은 border-image 9-slice → 코너는 유지, 상하만 늘림 */
-  .sponsor__box-chrome-fill,
-  .sponsor__box-chrome-frame {
-    background: none;
-    border-style: solid;
-    border-color: transparent;
-    border-width: var(--sponsor-border-y) var(--sponsor-border-x);
-    border-image-slice: var(--sponsor-slice) fill;
-    border-image-repeat: stretch;
-  }
-
-  .sponsor__box-chrome-fill {
-    border-image-source: url('/images/SponserFrameFill.svg');
-  }
-
-  .sponsor__box-chrome-frame {
-    border-image-source: url('/images/SponserFrame.svg');
+    --sponsor-ratio: var(--sponsor-mobile-ratio);
   }
 
   .sponsor__content {
@@ -797,8 +829,13 @@ ul {
     transform: none;
   }
 
-  .sponsor__logo--main {
-    height: clamp(24px, 4.5vw, 36px);
+  .sponsor__logos {
+    grid-template-columns: repeat(auto-fit, minmax(min(70px, 100%), 1fr));
+    gap: clamp(8px, 2.4vw, 16px) clamp(8px, 2.6vw, 18px);
+  }
+
+  .sponsor__logo--supporter {
+    height: clamp(20px, 4.2vw, 32px);
   }
 
   /* ── FOOTER ── */

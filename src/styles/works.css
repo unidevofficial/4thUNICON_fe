@@ -337,8 +337,33 @@
   flex-shrink: 0;
 }
 
+.overview-location__address {
+  margin: 6px 0 0;
+  font-size: clamp(13px, 1.1vw, 16px);
+  opacity: 0.75;
+  word-break: keep-all;
+}
+
 .overview-map {
   max-width: clamp(300px, 55vw, 900px);
+}
+
+.overview-map__embed {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 240px;
+  border: 0;
+  border-radius: clamp(8px, 0.8vw, 12px);
+}
+
+.overview-map__link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: clamp(13px, 1vw, 15px);
+  color: var(--pink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ── OVERVIEW: 주최 및 스폰서 (메인 sponsor 재사용) ── */
@@ -368,8 +393,8 @@
   /* 개요 전용: SponserFrame 대폭 확대 */
   width: min(100%, 1380px);
   max-width: 100%;
-  /* 원본 비율 대비 세로 +약 6% (메인 aspect는 유지) */
-  aspect-ratio: 925.53 / calc(505.62 * 1.26);
+  /* 원본 비율 대비 세로 +26% (메인 비율은 유지) */
+  --sponsor-ratio: 1.4528;
 }
 
 .overview-sponsor .sponsor__content {
@@ -950,24 +975,7 @@ body:has(.about-intro) .works-bg::before {
     width: min(100%, 980px);
     max-width: 100%;
     margin-inline: auto;
-    aspect-ratio: 925.53 / calc(505.62 * 1.26);
-  }
-
-  .overview-sponsor .sponsor__box-chrome-fill,
-  .overview-sponsor .sponsor__box-chrome-frame {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
-    border: none;
-    border-image: none;
-  }
-
-  .overview-sponsor .sponsor__box-chrome-fill {
-    background-image: url('/images/SponserFrameFill.svg');
-  }
-
-  .overview-sponsor .sponsor__box-chrome-frame {
-    background-image: url('/images/SponserFrame.svg');
+    --sponsor-ratio: 1.4528;
   }
 
   /* 태블릿·넓은 모바일: 데탑(90px)보다 덜 내리고 간격 압축 */
@@ -993,8 +1001,8 @@ body:has(.about-intro) .works-bg::before {
     transform: none;
   }
 
-  .overview-sponsor .sponsor__logo--main {
-    height: clamp(28px, 4.5vw, 40px);
+  .overview-sponsor .sponsor__logo--supporter {
+    height: clamp(24px, 4.5vw, 38px);
   }
 
   /* 모바일 행사일정표: 기본 대비 약 +8% (3% 후 5% 추가) */
@@ -1146,29 +1154,8 @@ body:has(.about-intro) .works-bg::before {
   .overview-sponsor .sponsor__box {
     width: 97%;
     margin-inline: auto;
-    --sponsor-slice: 104;
-    --sponsor-border-y: 46px;
-    --sponsor-border-x: 48px;
     --sponsor-mobile-ratio: 1.33;
-    aspect-ratio: var(--sponsor-mobile-ratio);
-  }
-
-  .overview-sponsor .sponsor__box-chrome-fill,
-  .overview-sponsor .sponsor__box-chrome-frame {
-    background: none;
-    border-style: solid;
-    border-color: transparent;
-    border-width: var(--sponsor-border-y) var(--sponsor-border-x);
-    border-image-slice: var(--sponsor-slice) fill;
-    border-image-repeat: stretch;
-  }
-
-  .overview-sponsor .sponsor__box-chrome-fill {
-    border-image-source: url('/images/SponserFrameFill.svg');
-  }
-
-  .overview-sponsor .sponsor__box-chrome-frame {
-    border-image-source: url('/images/SponserFrame.svg');
+    --sponsor-ratio: var(--sponsor-mobile-ratio);
   }
 
   .overview-sponsor .sponsor__content {

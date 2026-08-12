@@ -1,8 +1,7 @@
-import { ImageFrame } from '../components/ImageFrame';
 import { SectionBadge } from '../components/SectionBadge';
 import { SponsorBox } from '../components/SponsorBox';
 import { SubPageLayout } from '../components/SubPageLayout';
-import { EVENT, VENUE_MAP_IMAGE } from '../data/site';
+import { EVENT, VENUE_MAP_EMBED_SRC, VENUE_MAP_LINK } from '../data/site';
 
 export function OverviewPage() {
   return (
@@ -48,13 +47,28 @@ export function OverviewPage() {
             />
             {EVENT.place}
           </p>
+          <p className="overview-location__address">{EVENT.address}</p>
         </div>
-        <ImageFrame
-          src={VENUE_MAP_IMAGE}
-          alt="오시는 길 지도"
-          placeholderLabel="지도 이미지"
-          className="overview-map"
-        />
+        <div className="works-booth overview-map">
+          <div className="works-booth__frame">
+            <iframe
+              className="overview-map__embed"
+              src={VENUE_MAP_EMBED_SRC}
+              title={`${EVENT.place} 위치 지도`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+          <a
+            className="overview-map__link"
+            href={VENUE_MAP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            구글 지도에서 크게 보기
+          </a>
+        </div>
       </section>
 
       {/* ── 주최 및 스폰서 ── */}
