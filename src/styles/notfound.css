@@ -1,0 +1,58 @@
+/* ==================== 404 NOT FOUND ====================
+   존재하지 않거나 아직 열리지 않은 경로에서 보여주는 페이지.
+   원본 시안에 없는 화면이라 style.css / works.css와 분리했다.
+   ==================================================== */
+
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* 헤더 높이를 뺀 만큼 채워 푸터가 화면 아래에 자연스럽게 붙도록 */
+  min-height: clamp(480px, 72vh, 760px);
+  padding: clamp(120px, 14vw, 200px) clamp(24px, 4.17vw, 80px) clamp(64px, 7vw, 120px);
+  background-color: #c8dff5;
+  background-image: url('/images/MainBg02.jpg');
+  background-image: image-set(
+    url('/images/MainBg02.webp') type('image/webp'),
+    url('/images/MainBg02.jpg') type('image/jpeg')
+  );
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.notfound__icon {
+  width: clamp(120px, 14vw, 220px);
+  height: auto;
+  margin-bottom: clamp(24px, 2.5vw, 40px);
+}
+
+.notfound__message {
+  font-size: clamp(16px, 1.35vw, 24px);
+  font-weight: 600;
+  color: var(--pink);
+  letter-spacing: -0.02em;
+  /* 좁은 화면에서 단어 중간이 끊기지 않도록 */
+  word-break: keep-all;
+}
+
+.notfound__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(28px, 3vw, 44px);
+  padding: clamp(12px, 1.1vw, 18px) clamp(28px, 2.6vw, 44px);
+  border-radius: 999px;
+  background: var(--pink);
+  color: #fff;
+  font-size: clamp(14px, 1.05vw, 18px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: opacity 0.2s;
+}
+
+.notfound__button:hover {
+  opacity: 0.85;
+}
