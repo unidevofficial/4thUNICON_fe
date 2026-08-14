@@ -9,6 +9,7 @@ import './styles/works.css';
 // 미확정 콘텐츠용 플레이스홀더 스타일 (원본 CSS를 건드리지 않기 위해 분리)
 import './styles/placeholders.css';
 import './styles/notfound.css';
+import './styles/admin.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

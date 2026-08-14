@@ -1,0 +1,343 @@
+/* 관리자 화면. 행사 페이지 시안과 무관한 실무용 UI라 별도 파일로 분리한다. */
+
+.admin,
+.admin-login {
+  min-height: 100vh;
+  background: #f5f6f8;
+}
+
+.admin__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 3vw, 40px);
+  background: #fff;
+  border-bottom: 1px solid #e4e6ea;
+}
+
+.admin__nav {
+  display: flex;
+  gap: 8px;
+}
+
+.admin__nav-link {
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: #555;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin__nav-link:hover {
+  background: #f0f1f4;
+}
+
+.admin__nav-link.active {
+  background: var(--pink);
+  color: #fff;
+}
+
+.admin__body {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 40px) clamp(16px, 3vw, 40px) 80px;
+}
+
+/* ── 페이지 헤더 ─────────────────────────────── */
+
+.admin-page__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-page__title {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 800;
+}
+
+/* ── 버튼 ────────────────────────────────────── */
+
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--pink);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.admin-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-button--ghost {
+  background: #fff;
+  border-color: #d4d6dc;
+  color: #444;
+}
+
+.admin-button--danger {
+  background: #fff;
+  border-color: #e0b4b4;
+  color: #c0392b;
+}
+
+/* ── 폼 ──────────────────────────────────────── */
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 3vw, 32px);
+  background: #fff;
+  border: 1px solid #e4e6ea;
+  border-radius: 12px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.admin-field__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+}
+
+.admin-field__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d4d6dc;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  color: #222;
+}
+
+.admin-field__input:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 1px;
+}
+
+.admin-field__input--area {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.admin-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.admin-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.admin-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px 5px 12px;
+  border-radius: 999px;
+  background: #fbe7f1;
+  color: #a02a68;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-tag button {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.admin-thumb {
+  position: relative;
+  width: 120px;
+  aspect-ratio: 16 / 9;
+  border: 1px solid #e4e6ea;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-thumb button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ── 테이블 ──────────────────────────────────── */
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e4e6ea;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eef0f3;
+  vertical-align: middle;
+}
+
+.admin-table th {
+  background: #fafbfc;
+  font-size: 13px;
+  font-weight: 700;
+  color: #666;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-table__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.admin-table__row {
+  cursor: pointer;
+}
+
+.admin-table__row:hover {
+  background: #fafbfc;
+}
+
+/* 확인 처리된 문의는 흐리게 */
+.admin-table__row.is-checked {
+  color: #9aa0a6;
+}
+
+.admin-table__detail {
+  background: #fafbfc;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.7;
+}
+
+/* ── 상태 / 로그인 ───────────────────────────── */
+
+.admin-state {
+  padding: 48px 0;
+  color: #8a8a8a;
+  text-align: center;
+}
+
+.admin-state--error {
+  color: var(--pink);
+}
+
+.admin-error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 14px;
+}
+
+.admin-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(100%, 380px);
+  padding: clamp(24px, 4vw, 36px);
+  background: #fff;
+  border: 1px solid #e4e6ea;
+  border-radius: 12px;
+}
+
+.admin-login__title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
