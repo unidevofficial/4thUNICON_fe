@@ -393,13 +393,13 @@ ul {
 
 /*
  * 후원사 로고 그리드.
- * auto-fit + minmax라 폭이 좁아지면 열 수가 줄고, 넘치는 로고는 자동으로 다음 줄로 내려간다.
- * 데스크톱 기준 6열 → 로고 12개면 정확히 2줄.
+ * 열 수를 2~4로 고정한다. auto-fit은 폭이 넓어질수록 열이 계속 늘어 로고가 작아지는데,
+ * 상한을 4열로 묶어야 셀이 넓어지고 로고가 크게 보인다. (데스크톱 4열 → 12개면 3줄)
  */
 .sponsor__logos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr));
-  gap: clamp(12px, 1.4vw, 26px) clamp(12px, 1.6vw, 32px);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 34px) clamp(12px, 1.6vw, 32px);
   place-items: center;
   width: min(100%, 920px);
   margin: 0;
@@ -417,7 +417,7 @@ ul {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: clamp(30px, 3.05vw, 52px);
+  height: clamp(46px, 4.6vw, 76px);
   min-width: 0;
 }
 
@@ -666,6 +666,11 @@ ul {
   .footer__columns {
     gap: 40px;
   }
+
+  /* 4열이면 셀이 좁아 로고가 작아진다. 태블릿에서는 3열. */
+  .sponsor__logos {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -848,12 +853,12 @@ ul {
   }
 
   .sponsor__logos {
-    grid-template-columns: repeat(auto-fit, minmax(min(70px, 100%), 1fr));
-    gap: clamp(8px, 2.4vw, 16px) clamp(8px, 2.6vw, 18px);
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(14px, 4vw, 24px) clamp(10px, 3vw, 20px);
   }
 
   .sponsor__logos-item {
-    height: clamp(20px, 3.6vw, 30px);
+    height: clamp(42px, 13vw, 62px);
   }
 
   /* ── FOOTER ── */
