@@ -83,7 +83,7 @@ insert into public.admin (user_id, auth_user_id)
 values ('officialunidev@gmail.com', '<복사한_uuid>');
 ```
 
-2번을 빼면 로그인은 되지만 "관리자 권한이 없는 계정입니다" 화면이 뜹니다.
+2번을 빼면 로그인은 되지만 "관리자 권한이 없는 계정입니다" 화면이 뜹니다. 
 
 ### 타입 재생성
 
