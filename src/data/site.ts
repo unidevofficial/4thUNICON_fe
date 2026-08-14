@@ -40,13 +40,23 @@ export const FOOTER_LINKS: NavItem[] = [
 ];
 
 /**
- * TODO(행사 정보 미확정): 후원사가 확정되면 name/logo를 실제 값으로 교체한다.
- * 지금은 그리드 레이아웃 확인용 플레이스홀더 12개. 개수를 바꾸면 그리드가 자동으로 줄바꿈한다.
+ * 후원사. **배열 순서가 곧 후원 순서**이므로 임의로 정렬하지 않는다.
+ * 개수를 바꾸면 로고 그리드가 자동으로 줄바꿈한다.
  */
-export const SUPPORTERS: { name: string; logo: string | null }[] = Array.from(
-  { length: 12 },
-  (_, index) => ({ name: `후원사 ${index + 1}`, logo: '/images/Unidev.png' }),
-);
+export const SUPPORTERS: { name: string; logo: string | null; href: string | null }[] = [
+  { name: '한국콘텐츠진흥원', logo: '/images/sponsors/kocca.png', href: 'https://www.kocca.kr/' },
+  { name: '에피드게임즈', logo: '/images/sponsors/epidgames.png', href: 'https://www.epidgames.com/' },
+  { name: '크래프톤', logo: '/images/sponsors/krafton.svg', href: 'https://www.krafton.com/' },
+  { name: '한국모바일게임협회', logo: '/images/sponsors/kmga.png', href: 'https://www.k-mga.or.kr/' },
+  { name: '디벨로켓', logo: '/images/sponsors/develrocket.png', href: 'https://develrocket.com/' },
+  { name: '코그', logo: '/images/sponsors/kog.png', href: 'https://www.kog.co.kr/' },
+  { name: '뒤끝', logo: '/images/sponsors/thebackend.png', href: 'https://www.thebackend.io/' },
+  { name: '넥슨', logo: '/images/sponsors/nexon.svg', href: 'https://www.nexon.com/' },
+  { name: '컴투스', logo: '/images/sponsors/com2us.png', href: 'https://www.com2us.com/' },
+  { name: '저승협회', logo: '/images/sponsors/jeoseung.png', href: 'https://x.com/HellAssociation' },
+  { name: '리자드스무디', logo: '/images/sponsors/lizardsmoothie.png', href: 'https://lizardsmoothie.com/' },
+  { name: '바삭한소프트', logo: '/images/sponsors/basaksoft.png', href: 'https://basakansoft.com/' },
+];
 
 /**
  * TODO(행사 정보 미확정): 공식 SNS 계정 URL이 확정되면 href를 채운다.

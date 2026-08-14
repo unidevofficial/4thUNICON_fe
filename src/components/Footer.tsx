@@ -19,17 +19,30 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="footer__col">
+          <div className="footer__col footer__col--sponsors">
             <h3 className="footer__heading">후원사</h3>
-            {/* TODO(행사 정보 미확정): SUPPORTERS가 확정되기 전까지 '-'로 표기한다. */}
             {SUPPORTERS.length === 0 ? (
               <p className="footer__text">-</p>
             ) : (
-              SUPPORTERS.map((supporter) => (
-                <p key={supporter.name} className="footer__text">
-                  {supporter.name}
-                </p>
-              ))
+              // 세로로 6개씩 채운 뒤 다음 열로 넘어간다 (column 방향 + 높이 제한).
+              <ul className="footer__sponsors">
+                {SUPPORTERS.map((supporter) => (
+                  <li key={supporter.name}>
+                    {supporter.href ? (
+                      <a
+                        href={supporter.href}
+                        className="footer__link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {supporter.name}
+                      </a>
+                    ) : (
+                      <span className="footer__text">{supporter.name}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
 

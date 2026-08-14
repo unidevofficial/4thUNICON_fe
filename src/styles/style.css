@@ -407,18 +407,25 @@ ul {
   list-style: none;
 }
 
+/*
+ * 로고 가로세로비가 6:1(워드마크) ~ 1:1(정사각 마크) 로 제각각이라
+ * 높이만 고정하면 정사각 마크가 워드마크보다 한참 작아 보인다.
+ * 셀 크기를 고정하고 가로·세로를 함께 제한해 시각적 크기를 맞춘다.
+ */
 .sponsor__logos-item {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: clamp(30px, 3.05vw, 52px);
   min-width: 0;
 }
 
 .sponsor__logo--supporter {
-  height: clamp(28px, 2.2vw, 44px);
   width: auto;
+  height: auto;
   max-width: 100%;
+  max-height: 100%;
 }
 
 /* ==================== MERRY-GO-ROUND (푸터 직전) ==================== */
@@ -480,6 +487,17 @@ ul {
   gap: clamp(8px, 0.52vw, 10px);
 }
 
+/* 세로 6개씩 채우고 다음 열로 넘긴다. 행 수를 고정해야 열 배분이 6/6으로 떨어진다. */
+.footer__sponsors {
+  display: grid;
+  grid-template-rows: repeat(6, auto);
+  grid-auto-flow: column;
+  gap: clamp(6px, 0.42vw, 9px) clamp(20px, 1.67vw, 32px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .footer__link,
 .footer__text {
   font-size: clamp(12px, 0.78vw, 15px);
@@ -536,8 +554,8 @@ ul {
 }
 
 .footer__bottom {
-  margin-top: clamp(140px, 14vw, 248px);
-  padding-bottom: clamp(36px, 3vw, 56px);
+  margin-top: clamp(48px, 4.5vw, 80px);
+  padding-bottom: clamp(20px, 1.7vw, 32px);
 }
 
 .footer__bottom-inner {
@@ -834,8 +852,8 @@ ul {
     gap: clamp(8px, 2.4vw, 16px) clamp(8px, 2.6vw, 18px);
   }
 
-  .sponsor__logo--supporter {
-    height: clamp(20px, 4.2vw, 32px);
+  .sponsor__logos-item {
+    height: clamp(20px, 3.6vw, 30px);
   }
 
   /* ── FOOTER ── */
