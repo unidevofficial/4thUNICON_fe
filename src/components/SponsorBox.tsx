@@ -41,6 +41,14 @@ export function SponsorBox() {
               </li>
             ))}
           </ul>
+
+          <p className="sponsor__label">개인 후원</p>
+          <p className="sponsor__patron">
+            <span className="sponsor__patron-affiliation">전북대학교 컴퓨터인공지능학부</span>
+            <span className="sponsor__patron-name">
+              윤수경<span className="sponsor__patron-title">교수님</span>
+            </span>
+          </p>
         </div>
       </div>
     </section>

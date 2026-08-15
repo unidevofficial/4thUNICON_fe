@@ -428,6 +428,35 @@ ul {
   max-height: 100%;
 }
 
+/* 개인 후원 — 소속(작게) / 이름(크게) + 호칭(작게) */
+.sponsor__patron {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2px, 0.3vw, 6px);
+  margin: 0;
+  color: #444;
+}
+
+.sponsor__patron-affiliation {
+  font-size: clamp(11px, 0.85vw, 15px);
+  font-weight: 500;
+}
+
+.sponsor__patron-name {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  font-size: clamp(18px, 1.7vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sponsor__patron-title {
+  font-size: clamp(11px, 0.85vw, 15px);
+  font-weight: 500;
+}
+
 /* ==================== MERRY-GO-ROUND (푸터 직전) ==================== */
 /* 스폰서 박스 위치(flex)는 건드리지 않고, 시각적으로만 올려 스폰서~푸터 ~300px 유지 */
 .merry {

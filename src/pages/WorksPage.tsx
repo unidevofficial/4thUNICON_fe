@@ -147,12 +147,22 @@ export function WorksPage() {
           <p className="works-state works-state--error">
             참가작품을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.
           </p>
+        ) : works.length === 0 ? (
+          // 등록된 작품이 0건이면 "검색 결과 없음"이 아니라 아직 준비 중이라는 뜻이다.
+          <div className="works-pending">
+            <img
+              src="/images/yellow_a_frame.png"
+              alt=""
+              aria-hidden="true"
+              className="works-pending__icon"
+            />
+            <p className="works-pending__title">참가작품 준비중입니다</p>
+            <p className="works-pending__desc">
+              출품작 등록이 마무리되는 대로 이곳에서 공개됩니다.
+            </p>
+          </div>
         ) : visibleWorks.length === 0 ? (
-          <p className="works-state">
-            {works.length === 0
-              ? '아직 등록된 참가작품이 없습니다.'
-              : '조건에 맞는 작품이 없습니다.'}
-          </p>
+          <p className="works-state">조건에 맞는 작품이 없습니다.</p>
         ) : (
           <div className="works-grid">
             {visibleWorks.map((work) => {

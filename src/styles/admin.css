@@ -16,7 +16,8 @@
   border-bottom: 1px solid #e4e6ea;
 }
 
-.admin__nav {
+.admin__nav,
+.admin__actions {
   display: flex;
   gap: 8px;
 }

@@ -913,6 +913,37 @@ body:has(.about-intro) .works-bg::before {
   color: var(--pink);
 }
 
+/* 등록된 작품이 0건일 때의 안내 (준비중). */
+.works-pending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 0.8vw, 12px);
+  padding: clamp(40px, 5vw, 72px) 0;
+  text-align: center;
+}
+
+.works-pending__icon {
+  width: clamp(84px, 8vw, 132px);
+  height: auto;
+  /* 픽셀아트라 확대 시 보간되면 뭉갠다. */
+  image-rendering: pixelated;
+  margin-bottom: clamp(4px, 0.6vw, 10px);
+}
+
+.works-pending__title {
+  margin: 0;
+  font-size: clamp(16px, 1.35vw, 22px);
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.works-pending__desc {
+  margin: 0;
+  font-size: clamp(13px, 0.95vw, 16px);
+  color: #8a8a8a;
+}
+
 .works-card__link {
   font-size: clamp(11px, 0.73vw, 13px);
   color: #aaa;

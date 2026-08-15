@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CONTACT_EMAIL, FOOTER_LINKS, SOCIAL_LINKS, SUPPORTERS } from '../data/site';
 
 export function Footer() {
+  const navigate = useNavigate();
+
   return (
     <footer className="footer">
       <div className="footer__inner">
@@ -53,7 +55,13 @@ export function Footer() {
         </div>
 
         <div className="footer__brand">
-          <img src="/images/UnidevFooter.png" alt="UNIDEV" className="footer__logo" />
+          {/* 관리자 페이지 숨은 진입점. 일반 방문자가 실수로 누르지 않도록 더블클릭으로만 동작한다. */}
+          <img
+            src="/images/UnidevFooter.png"
+            alt="UNIDEV"
+            className="footer__logo"
+            onDoubleClick={() => navigate('/admin')}
+          />
           <p className="footer__email">이메일 : {CONTACT_EMAIL}</p>
           <div className="footer__social">
             {SOCIAL_LINKS.map((social) => {
