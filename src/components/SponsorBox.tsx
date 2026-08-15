@@ -1,6 +1,22 @@
 import { SUPPORTERS } from '../data/site';
 
 /**
+ * 셀 높이를 그대로 쓰면 가로로 긴 로고가 정사각 로고보다 훨씬 넓게 그려져
+ * 시각적 크기가 제각각이 된다. 렌더 면적이 비슷해지도록 높이를 1/√비율로 줄인다.
+ */
+function applyOpticalScale(img: HTMLImageElement | null) {
+  if (!img) return;
+  const apply = () => {
+    const ratio = img.naturalWidth / img.naturalHeight;
+    if (!ratio) return;
+    img.style.setProperty('--logo-scale', String(Math.min(1, 1 / Math.sqrt(ratio))));
+  };
+  // 캐시된 이미지는 load 이벤트가 이미 지나갔을 수 있다.
+  if (img.complete) apply();
+  else img.addEventListener('load', apply, { once: true });
+}
+
+/**
  * 주최 / 후원사 박스. 메인 페이지와 행사 개요 페이지에서 공유한다.
  *
  * 주의: style.css의 `.sponsor__logo--host + .sponsor__label`,
@@ -29,6 +45,7 @@ export function SponsorBox() {
               <li key={supporter.name} className="sponsor__logos-item">
                 {supporter.logo ? (
                   <img
+                    ref={applyOpticalScale}
                     src={supporter.logo}
                     alt={supporter.name}
                     className="sponsor__logo sponsor__logo--supporter"

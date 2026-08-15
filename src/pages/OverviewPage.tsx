@@ -47,7 +47,7 @@ export function OverviewPage() {
             />
             {EVENT.place}
           </p>
-          <p className="overview-location__address">{EVENT.address}</p>
+          {/* <p className="overview-location__address">{EVENT.address}</p> */}
         </div>
         <div className="works-booth overview-map">
           <div className="works-booth__frame">

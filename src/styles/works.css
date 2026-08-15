@@ -108,7 +108,8 @@
 .works-section {
   position: relative;
   z-index: 3;
-  padding: clamp(112px, 11vw, 192px) clamp(20px, 4.17vw, 80px);
+  /* 세로 여백은 폭에 비례하되, 섹션 사이가 화면 하나만큼 벌어지지 않도록 상한을 낮게 둔다. */
+  padding: clamp(72px, 7.5vw, 140px) clamp(20px, 4.17vw, 80px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -390,21 +391,15 @@
 }
 
 .overview-sponsor .sponsor__box {
-  /* 개요 전용: SponserFrame 대폭 확대 */
+  /* 개요 전용: SponserFrame 대폭 확대. 비율은 메인과 공유해 내부 배치를 맞춘다. */
   width: min(100%, 1380px);
   max-width: 100%;
-  /* 원본 비율 대비 세로 +26% (메인 비율은 유지) */
-  --sponsor-ratio: 1.4528;
 }
 
-.overview-sponsor .sponsor__content {
-  /* 웹: 라벨·로고 블록을 크게 아래로 (기존 18px의 5배) */
-  transform: translateY(90px);
-}
-
-.overview-sponsor .sponsor__label {
-  font-size: 24px;
-}
+/*
+ * 내부 배치는 메인과 동일하게 둔다 (박스 폭만 다름).
+ * 예전에는 여기서 transform·font-size를 덮어써서 같은 컴포넌트가 다르게 보였다.
+ */
 
 /* 메인 page-bg와 동일: merry가 있을 때만 푸터를 lift만큼 끌어올림 */
 .works-bg:has(> .merry) {
@@ -529,6 +524,7 @@ body:has(.about-intro) .works-bg::before {
   color: #222;
   letter-spacing: -0.02em;
   line-height: 1.4;
+  text-align: center;
 }
 
 .about-text {
@@ -594,7 +590,9 @@ body:has(.about-intro) .works-bg::before {
   gap: var(--about-stat-gap);
   width: max-content;
   max-width: 100%;
-  justify-content: start;
+  /* 폭이 max-content라 stretch가 걸리지 않는다. 섹션 안에서 가운데로 둔다. */
+  margin-inline: auto;
+  justify-content: center;
 }
 
 .about-stat {
@@ -723,7 +721,17 @@ body:has(.about-intro) .works-bg::before {
 /* ── BOOTH MAP ── */
 .works-booth {
   width: 100%;
-  max-width: clamp(320px, 62vw, 1180px);
+  /* 62vw는 태블릿에서 좌우 여백이 콘텐츠만큼 넓어 보인다. 상한(1180px)은 그대로 둔다. */
+  max-width: clamp(320px, 75vw, 1180px);
+}
+
+.works-booth__zoom {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: clamp(13px, 1vw, 15px);
+  color: var(--pink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .works-booth__frame {
@@ -757,7 +765,8 @@ body:has(.about-intro) .works-bg::before {
 /* ── FILTERS ── */
 .works-filters {
   width: 100%;
-  max-width: clamp(320px, 62vw, 1180px);
+  /* 62vw는 태블릿에서 좌우 여백이 콘텐츠만큼 넓어 보인다. 상한(1180px)은 그대로 둔다. */
+  max-width: clamp(320px, 75vw, 1180px);
   margin-bottom: clamp(28px, 3vw, 44px);
 }
 
@@ -828,7 +837,8 @@ body:has(.about-intro) .works-bg::before {
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(16px, 1.8vw, 28px);
   width: 100%;
-  max-width: clamp(320px, 62vw, 1180px);
+  /* 62vw는 태블릿에서 좌우 여백이 콘텐츠만큼 넓어 보인다. 상한(1180px)은 그대로 둔다. */
+  max-width: clamp(320px, 75vw, 1180px);
 }
 
 .works-card {
@@ -979,7 +989,7 @@ body:has(.about-intro) .works-bg::before {
   }
 
   .works-section {
-    padding: 96px 20px;
+    padding: 64px 20px;
   }
 
   .works-section:first-of-type {
@@ -998,12 +1008,24 @@ body:has(.about-intro) .works-bg::before {
     width: clamp(140px, 50.4vw, 203px);
   }
 
+  /*
+   * 좁은 화면에서는 데스크톱용 2줄 분할을 풀고 한 문단처럼 흐르게 둔다.
+   * 블록으로 두면 첫 줄이 넘쳐 "프로젝트를" 한 단어만 남는 고아 줄이 생긴다.
+   */
   .overview-info {
+    display: block;
     padding: 0 8px;
+    text-wrap: balance;
   }
 
   .overview-info__line {
+    display: inline;
     white-space: normal;
+  }
+
+  /* 인라인으로 이어 붙일 때 단어가 붙지 않도록 공백을 넣는다. */
+  .overview-info__line + .overview-info__line::before {
+    content: ' ';
   }
 
   .overview-location {
@@ -1028,38 +1050,11 @@ body:has(.about-intro) .works-bg::before {
    * (style.css 모바일 9-slice/97% 폭을 덮어씀)
    * 진짜 폰 구간은 아래 max-width: 600px에서 다시 모바일화
    */
+  /* 폭만 개요 전용으로 키우고, 내부 배치는 메인 규칙을 그대로 쓴다. */
   .overview-sponsor .sponsor__box {
     width: min(100%, 980px);
     max-width: 100%;
     margin-inline: auto;
-    --sponsor-ratio: 1.4528;
-  }
-
-  /* 태블릿·넓은 모바일: 데탑(90px)보다 덜 내리고 간격 압축 */
-  .overview-sponsor .sponsor__content {
-    --sponsor-section-gap: 4.5%;
-    --sponsor-section-gap-after-host: 2.5%;
-    --sponsor-label-gap: 0.8%;
-    padding: 10% 12% 14%;
-    transform: translateY(28px);
-  }
-
-  .overview-sponsor .sponsor__label {
-    font-size: clamp(16px, 2.8vw, 20px);
-    transform: none;
-  }
-
-  .overview-sponsor .sponsor__label:first-child {
-    transform: none;
-  }
-
-  .overview-sponsor .sponsor__logo--host {
-    height: clamp(48px, 8vw, 72px);
-    transform: none;
-  }
-
-  .overview-sponsor .sponsor__logo--supporter {
-    height: clamp(24px, 4.5vw, 38px);
   }
 
   /* 모바일 행사일정표: 기본 대비 약 +8% (3% 후 5% 추가) */
@@ -1215,15 +1210,6 @@ body:has(.about-intro) .works-bg::before {
     --sponsor-ratio: var(--sponsor-mobile-ratio);
   }
 
-  .overview-sponsor .sponsor__content {
-    transform: translateY(-6px);
-  }
-
-  .overview-sponsor .sponsor__label {
-    font-size: 14px;
-    transform: translateY(1px);
-  }
-
   .works-bg:has(.overview-sponsor) {
     --merry-lift: calc(52.4375vw + clamp(24px, 2.5vw, 48px) - 80px + 100px);
   }
@@ -1302,29 +1288,6 @@ body:has(.about-intro) .works-bg::before {
 @media (min-width: 769px) and (max-width: 1024px) {
   .works-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* 태블릿: 개요 스폰서 라벨·로고 위치 (데탑 90px는 과함) */
-  .overview-sponsor .sponsor__content {
-    --sponsor-section-gap: 5%;
-    --sponsor-section-gap-after-host: 3%;
-    --sponsor-label-gap: 0.9%;
-    padding: 10% 12% 13%;
-    transform: translateY(36px);
-  }
-
-  .overview-sponsor .sponsor__label {
-    font-size: 20px;
-    transform: none;
-  }
-
-  .overview-sponsor .sponsor__label:first-child {
-    transform: none;
-  }
-
-  .overview-sponsor .sponsor__logo--host {
-    height: clamp(56px, 7vw, 88px);
-    transform: none;
   }
 
   /* iPad Air 등 태블릿: About 본문·제목 스케일 축소 */

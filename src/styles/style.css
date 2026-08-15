@@ -280,7 +280,12 @@ ul {
   flex: 0 0 auto;
   margin-top: auto;
   padding: clamp(80px, 7vw, 140px) clamp(20px, 4.17vw, 80px) 0;
-  transform: translateY(-220px);
+  /*
+   * 시각적으로만 위로 당긴다(transform이라 레이아웃 높이는 그대로).
+   * 고정 -220px이면 1200~1600 구간에서 hero__info보다 위로 올라가 날짜·장소를 덮는다.
+   * hero의 --hero-shift-y와 같이 뷰포트에 비례해 커지도록 두어 항상 아래에 머물게 한다.
+   */
+  transform: translateY(calc(-1 * clamp(60px, 24vw - 150px, 260px)));
 }
 
 .sponsor__box {
@@ -354,9 +359,11 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  /* 비율 스페이서가 높이를 결정할 때(내용이 짧을 때) 위아래 여백이 같아진다. */
+  justify-content: center;
   text-align: center;
-  padding: 12% 14% 12%;
+  /* 세로 패딩은 9-slice 코너(11.24%)를 살짝 넘는 선까지만. 이보다 크면 위아래가 텅 빈다. */
+  padding: calc(6.5% + 10px) 14%;
   box-sizing: border-box;
 }
 
@@ -409,15 +416,15 @@ ul {
 
 /*
  * 로고 가로세로비가 6:1(워드마크) ~ 1:1(정사각 마크) 로 제각각이라
- * 높이만 고정하면 정사각 마크가 워드마크보다 한참 작아 보인다.
- * 셀 크기를 고정하고 가로·세로를 함께 제한해 시각적 크기를 맞춘다.
+ * 높이만 고정하면 렌더 면적이 2배 넘게 벌어진다. 셀 높이는 정사각 마크 기준으로 잡고,
+ * 가로로 긴 로고는 --logo-scale(= 1/√비율, SponsorBox에서 주입)로 높이를 줄여 면적을 맞춘다.
  */
 .sponsor__logos-item {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: clamp(46px, 4.6vw, 76px);
+  height: clamp(58px, 5.8vw, 96px);
   min-width: 0;
 }
 
@@ -425,7 +432,7 @@ ul {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: calc(100% * var(--logo-scale, 1));
 }
 
 /* 개인 후원 — 소속(작게) / 이름(크게) + 호칭(작게) */
@@ -669,8 +676,12 @@ ul {
     margin-left: 0;
   }
 
+  /*
+   * 이 구간은 hero__info가 세로 스택이라 hero가 아래로 더 내려온다.
+   * 데스크톱과 같은 크기로 당기면 날짜·장소를 덮으므로 폭에 비례한 작은 값만 당긴다.
+   */
   .sponsor {
-    transform: translateY(clamp(-140px, -14vw, -60px));
+    transform: translateY(calc(-1 * clamp(40px, 34vw - 285px, 140px)));
   }
 
   .sponsor__logo--host {
@@ -865,7 +876,7 @@ ul {
   }
 
   .sponsor__content {
-    padding: 10% 10% 12%;
+    padding: 7% 10%;
   }
 
   .sponsor__label {
@@ -887,7 +898,7 @@ ul {
   }
 
   .sponsor__logos-item {
-    height: clamp(42px, 13vw, 62px);
+    height: clamp(54px, 16vw, 78px);
   }
 
   /* ── FOOTER ── */
@@ -972,11 +983,5 @@ ul {
 @media (max-width: 768px) and (min-width: 700px) {
   .sponsor {
     transform: translateY(-14px);
-  }
-}
-
-@media (max-width: 1133px) and (min-width: 1000px) {
-  .sponsor {
-    transform: translateY(calc(clamp(-140px, -14vw, -60px) - 14px));
   }
 }

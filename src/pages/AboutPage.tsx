@@ -35,7 +35,8 @@ export function AboutPage() {
             <div className="about-block">
               <h2 className="about-heading">설립 목적</h2>
               <p className="about-text">
-                2023년부터 대학생 개발자들의 성장과 네트워킹을 지원하며, 매년
+                {/* br이 숨겨지는 모바일에서 단어가 붙지 않도록 공백을 명시한다. */}
+                2023년부터 대학생 개발자들의 성장과 네트워킹을 지원하며, 매년{' '}
                 <br className="about-br-desktop" />
                 혁신적인 프로젝트들을 발굴하고 전시하는 플랫폼을 제공하고 있습니다.
               </p>
@@ -54,7 +55,7 @@ export function AboutPage() {
             <div className="about-block">
               <h2 className="about-heading">비전</h2>
               <p className="about-text">
-                대학생 개발자들이 자신의 아이디어를 현실로 만들고,
+                대학생 개발자들이 자신의 아이디어를 현실로 만들고,{' '}
                 <br className="about-br-desktop" />
                 동료들과 함께 성장할 수 있는 생태계를 구축합니다.
               </p>

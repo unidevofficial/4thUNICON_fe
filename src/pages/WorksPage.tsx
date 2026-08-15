@@ -67,6 +67,17 @@ export function WorksPage() {
           alt="부스 배치도"
           placeholderLabel="부스 배치도 이미지"
         />
+        {/* 좁은 화면에서는 도면 글자가 뭉개져 원본을 따로 열 수 있게 한다. */}
+        {BOOTH_MAP_IMAGE ? (
+          <a
+            className="works-booth__zoom"
+            href={BOOTH_MAP_IMAGE}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            배치도 원본 크게 보기
+          </a>
+        ) : null}
       </section>
 
       {/* ── 참가 작품 ── */}
