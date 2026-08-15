@@ -80,7 +80,5 @@ export const ABOUT_EXTERNAL_LINKS: { label: string; href: string | null }[] = [
   { label: 'Instagram', href: 'https://www.instagram.com/unidev.official' },
 ];
 
-/**
- * TODO(행사 정보 미확정): 부스 배치도 이미지가 나오면 경로를 채운다. (예: '/images/booth-map.png')
- */
-export const BOOTH_MAP_IMAGE: string | null = null;
+/** null 로 두면 참가작품 페이지에 플레이스홀더가 대신 표시된다. */
+export const BOOTH_MAP_IMAGE: string | null = '/images/blueprint.png';
