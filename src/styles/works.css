@@ -884,10 +884,10 @@ body:has(.about-intro) .works-bg::before {
 }
 
 .works-card__team-icon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  opacity: 0.7;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--pink);
 }
 
 .works-card__title {

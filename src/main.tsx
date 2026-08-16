@@ -10,6 +10,7 @@ import './styles/works.css';
 import './styles/placeholders.css';
 import './styles/notfound.css';
 import './styles/admin.css';
+import './styles/work-detail.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

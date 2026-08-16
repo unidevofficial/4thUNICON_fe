@@ -5,6 +5,7 @@ import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { OverviewPage } from './pages/OverviewPage';
+import { WorkDetailPage } from './pages/WorkDetailPage';
 import { WorksPage } from './pages/WorksPage';
 import { AdminInquiriesPage } from './pages/admin/AdminInquiriesPage';
 import { AdminLayout } from './pages/admin/AdminLayout';
@@ -20,6 +21,7 @@ export function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/overview" element={<OverviewPage />} />
         <Route path="/works" element={<WorksPage />} />
+        <Route path="/works/:id" element={<WorkDetailPage />} />
         <Route path="/about" element={<AboutPage />} />
 
         <Route path="/admin/login" element={<AdminLoginPage />} />

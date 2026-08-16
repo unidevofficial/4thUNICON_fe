@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ImageFrame } from '../components/ImageFrame';
 import { SectionBadge } from '../components/SectionBadge';
 import { SubPageLayout } from '../components/SubPageLayout';
@@ -8,6 +9,7 @@ import {
   TEAM_TYPE_OPTIONS,
   collectGenres,
   shuffle,
+  teamTypeLabel,
   type SortValue,
   type Work,
 } from '../data/works';
@@ -177,11 +179,15 @@ export function WorksPage() {
         ) : (
           <div className="works-grid">
             {visibleWorks.map((work) => {
+              if (!work.id) return null;
               const thumbnail = getPublicUrl(work.banner_image);
-              // 다운로드가 우선, 없으면 영상. 둘 다 없으면 비활성 텍스트로 남긴다.
-              const link = work.download_url ?? work.video_url;
               return (
-                <article key={work.id} className="works-card">
+                <Link
+                  key={work.id}
+                  to={`/works/${work.id}`}
+                  className="works-card"
+                  aria-label={`${work.title ?? '참가 작품'} 상세 페이지로 이동`}
+                >
                   <div
                     className="works-card__thumb"
                     style={
@@ -195,26 +201,34 @@ export function WorksPage() {
                     }
                   />
                   <div className="works-card__body">
-                    <p className="works-card__genre">{(work.genres ?? []).join(', ')}</p>
+                    <h2 className="works-card__title">{work.title ?? '제목 미정'}</h2>
                     <p className="works-card__team">
-                      {/* DB에 팀 로고 컬럼이 없어 기본 UNIDEV 로고를 유지한다. */}
-                      <img src="/images/Unidev.png" alt="" className="works-card__team-icon" />
-                      {work.team_name ?? ''}
+                      <svg
+                        className="works-card__team-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      </svg>
+                      {work.team_name || '팀명 미정'}
                     </p>
-                    <p className="works-card__title">{work.title ?? ''}</p>
-                    <p className="works-card__desc">{work.description ?? ''}</p>
-                    <p className="works-card__link">
-                      링크:{' '}
-                      {link ? (
-                        <a href={link} target="_blank" rel="noopener noreferrer">
-                          바로가기
-                        </a>
-                      ) : (
-                        <span>바로가기</span>
-                      )}
+                    <p className="works-card__desc">
+                      {work.description || '작품 설명이 준비 중입니다.'}
                     </p>
+                    <div className="works-card__meta">
+                      <span>장르: {(work.genres ?? []).join(', ') || '-'}</span>
+                      <span>참가 부문: {teamTypeLabel(work.team_type) || '-'}</span>
+                    </div>
                   </div>
-                </article>
+                </Link>
               );
             })}
           </div>
