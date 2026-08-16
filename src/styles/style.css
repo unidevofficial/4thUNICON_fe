@@ -50,7 +50,7 @@ ul {
 
 /* ==================== HEADER ==================== */
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -58,6 +58,18 @@ ul {
   max-width: none;
   z-index: 10;
   padding: clamp(16px, 1.67vw, 32px) clamp(24px, 4.17vw, 80px);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.header.is-scrolled,
+.header.is-open {
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom-color: rgba(232, 67, 147, 0.16);
+  box-shadow: 0 8px 24px rgba(53, 41, 71, 0.08);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
 .header__inner {
