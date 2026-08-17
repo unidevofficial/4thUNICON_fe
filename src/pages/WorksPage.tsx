@@ -16,6 +16,9 @@ import {
 import { useWorks } from '../hooks/useWorks';
 import { getPublicUrl } from '../lib/supabase';
 
+/** 이 수 이하면 아직 등록이 진행 중이라고 보고 목록 아래에 안내를 덧붙인다. */
+const PARTIAL_WORKS_THRESHOLD = 50;
+
 function sortWorks(works: Work[], sort: SortValue, order: Map<string, number>): Work[] {
   const sorted = [...works];
   if (sort === 'name') {
@@ -233,6 +236,22 @@ export function WorksPage() {
             })}
           </div>
         )}
+
+        {/*
+          등록 작품이 아직 다 차지 않은 동안에는 목록 아래에 추가 예정 안내를 덧붙인다.
+          (0건일 때는 위의 준비중 안내가 이미 같은 역할을 한다.)
+        */}
+        {!loading && !error && works.length > 0 && works.length <= PARTIAL_WORKS_THRESHOLD ? (
+          <div className="works-pending">
+            <img
+              src="/images/yellow_a_frame.png"
+              alt=""
+              aria-hidden="true"
+              className="works-pending__icon"
+            />
+            <p className="works-pending__title">작품 정보 추가 중!</p>
+          </div>
+        ) : null}
       </section>
     </SubPageLayout>
   );
