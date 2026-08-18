@@ -21,6 +21,11 @@ export function useAdminSession(): AdminSession {
   });
 
   useEffect(() => {
+    if (!supabase) {
+      setState({ signedIn: false, isAdmin: false, loading: false });
+      return;
+    }
+
     let alive = true;
 
     async function resolve(signedIn: boolean) {
@@ -28,7 +33,7 @@ export function useAdminSession(): AdminSession {
         if (alive) setState({ signedIn: false, isAdmin: false, loading: false });
         return;
       }
-      const { data, error } = await supabase.rpc('is_admin');
+      const { data, error } = await supabase!.rpc('is_admin');
       if (!alive) return;
       setState({ signedIn: true, isAdmin: !error && data === true, loading: false });
     }

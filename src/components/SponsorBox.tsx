@@ -1,4 +1,4 @@
-import { SUPPORTERS } from '../data/site';
+import { SUPPORTERS, WORK_COUNT } from '../data/site';
 
 /**
  * 셀 높이를 그대로 쓰면 가로로 긴 로고가 정사각 로고보다 훨씬 넓게 그려져
@@ -19,7 +19,7 @@ function applyOpticalScale(img: HTMLImageElement | null) {
 /**
  * 주최 / 후원사 박스. 메인 페이지와 행사 개요 페이지에서 공유한다.
  *
- * 주의: style.css의 `.sponsor__logo--host + .sponsor__label`,
+ * 주의: style.css의 `.sponsor__host-row + .sponsor__label`,
  * `.sponsor__label:first-child` 등 인접 선택자가 있으므로 DOM 순서를 바꾸지 말 것.
  */
 export function SponsorBox() {
@@ -31,12 +31,21 @@ export function SponsorBox() {
           <div className="sponsor__box-chrome-frame" />
         </div>
         <div className="sponsor__content">
-          <p className="sponsor__label">주최</p>
-          <img
-            src="/images/Unidev.png"
-            alt="UNIDEV"
-            className="sponsor__logo sponsor__logo--host"
-          />
+          {/* 주최 로고와 출품작 수를 같은 행에 두 열로 */}
+          <div className="sponsor__host-row">
+            <div className="sponsor__host-col">
+              <p className="sponsor__label">주최</p>
+              <img
+                src="/images/Unidev.png"
+                alt="UNIDEV"
+                className="sponsor__logo sponsor__logo--host"
+              />
+            </div>
+            <div className="sponsor__host-col">
+              <p className="sponsor__label">출품작 수</p>
+              <p className="sponsor__count">{WORK_COUNT}개</p>
+            </div>
+          </div>
 
           <p className="sponsor__label">후원사</p>
           {/* 좁은 화면에서는 auto-fit이 열 수를 줄여 넘치는 로고를 다음 줄로 내린다. */}

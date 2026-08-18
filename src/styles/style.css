@@ -57,7 +57,7 @@ ul {
   width: 100%;
   max-width: none;
   z-index: 10;
-  padding: clamp(16px, 1.67vw, 32px) clamp(24px, 4.17vw, 80px);
+  padding: clamp(12px, 1.25vw, 24px) clamp(24px, 4.17vw, 80px);
   background: transparent;
   border-bottom: 1px solid transparent;
   transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -65,7 +65,7 @@ ul {
 
 .header.is-scrolled,
 .header.is-open {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.62);
   border-bottom-color: rgba(232, 67, 147, 0.16);
   box-shadow: 0 8px 24px rgba(53, 41, 71, 0.08);
   -webkit-backdrop-filter: blur(14px);
@@ -80,7 +80,7 @@ ul {
 }
 
 .header__logo-img {
-  height: clamp(44px, 3.3vw, 64px);
+  height: clamp(36px, 2.7vw, 52px);
   width: auto;
   max-width: none;
   object-fit: contain;
@@ -285,6 +285,23 @@ ul {
   margin-left: 22px;
 }
 
+/*
+ * hero__info와 같은 시각 위치 체계를 쓴다. info가 transform으로만 올라가 있어
+ * 같은 양을 당기지 않으면 소개 문구가 스폰서 박스 안으로 파고든다.
+ * info와의 간격은 margin-top으로만 조절한다.
+ */
+.hero__desc {
+  margin-top: clamp(24px, 3vw, 60px);
+  transform: translateY(calc(-1 * (var(--hero-shift-y) - 10px)));
+  font-size: clamp(14px, 1.05vw, 19px);
+  font-weight: 500;
+  color: var(--pink);
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: 1.6;
+  max-width: min(90vw, 760px);
+}
+
 /* ==================== SPONSOR ==================== */
 .sponsor {
   display: flex;
@@ -296,8 +313,12 @@ ul {
    * 시각적으로만 위로 당긴다(transform이라 레이아웃 높이는 그대로).
    * 고정 -220px이면 1200~1600 구간에서 hero__info보다 위로 올라가 날짜·장소를 덮는다.
    * hero의 --hero-shift-y와 같이 뷰포트에 비례해 커지도록 두어 항상 아래에 머물게 한다.
+   *
+   * 기울기 주의: hero__desc는 --hero-shift-y(min(10vw,200px)) 곡선을 타는데
+   * 이 당김이 그보다 가파르면 1200~1700 구간에서 박스가 소개 문구를 덮는다.
+   * 1920의 당김(260px 상한)은 유지하면서 중간 폭에서만 완만해지도록 기울기를 잡았다.
    */
-  transform: translateY(calc(-1 * clamp(60px, 24vw - 150px, 260px)));
+  transform: translateY(calc(-1 * clamp(20px, 32.6vw - 362px, 260px)));
 }
 
 .sponsor__box {
@@ -365,6 +386,9 @@ ul {
   --sponsor-section-gap: 8.2%; /* 주최 ↔ 후원사 */
   --sponsor-section-gap-after-host: 4%;
   --sponsor-label-gap: 1.1%; /* 라벨 ↔ 바로 아래 로고 */
+  /* 주최 로고와 출품작 수가 같은 높이 박스를 공유해야 두 열의 시선 높이가 어긋나지 않는다. */
+  --sponsor-host-h: clamp(80px, 6vw, 118px);
+  --sponsor-host-lift: -28px;
   position: relative;
   grid-area: 1 / 1;
   min-width: 0;
@@ -391,7 +415,7 @@ ul {
   margin-top: var(--sponsor-section-gap);
 }
 
-.sponsor__logo--host + .sponsor__label {
+.sponsor__host-row + .sponsor__label {
   margin-top: var(--sponsor-section-gap-after-host);
 }
 
@@ -405,9 +429,47 @@ ul {
 }
 
 .sponsor__logo--host {
-  height: clamp(80px, 6vw, 118px);
+  height: var(--sponsor-host-h);
   width: auto;
-  transform: translate(-20px, -28px);
+  max-width: 100%;
+  /* 가로 이동은 열이 대칭을 맡으므로 세로 보정만 남긴다. */
+  transform: translateY(var(--sponsor-host-lift));
+}
+
+/* 주최 로고 ↔ 출품작 수 2열 */
+.sponsor__host-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(64px, 15%, 240px);
+}
+
+/*
+ * 두 열의 폭을 같게 고정해야 각 열의 중심이 박스 중앙에서 좌우 같은 거리에 놓인다.
+ * (내용 폭에 맡기면 넓은 로고 쪽으로 중심이 밀린다.)
+ * 폭은 가장 넓은 내용인 UNIDEV 로고(높이 × 약 2.3)가 들어가는 선으로 잡는다.
+ */
+.sponsor__host-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  width: clamp(190px, 15.5vw, 300px);
+  min-width: 0;
+}
+
+/* 로고와 같은 높이 박스에 넣어 주최 로고와 위아래 위치를 맞춘다. */
+.sponsor__count {
+  display: flex;
+  align-items: center;
+  height: var(--sponsor-host-h);
+  margin: 0;
+  font-size: clamp(38px, 3.2vw, 62px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #222;
+  white-space: nowrap;
+  transform: translateY(var(--sponsor-host-lift));
 }
 
 /*
@@ -688,23 +750,37 @@ ul {
     margin-left: 0;
   }
 
+  .hero__desc {
+    transform: translateY(calc(-1 * (var(--hero-shift-y) - 21px)));
+    margin-top: clamp(16px, 2.4vw, 28px);
+    font-size: clamp(11px, 1.5vw, 14px);
+  }
+
   /*
    * 이 구간은 hero__info가 세로 스택이라 hero가 아래로 더 내려온다.
    * 데스크톱과 같은 크기로 당기면 날짜·장소를 덮으므로 폭에 비례한 작은 값만 당긴다.
    */
   .sponsor {
-    transform: translateY(calc(-1 * clamp(40px, 34vw - 285px, 140px)));
+    transform: translateY(calc(-1 * clamp(20px, 16.5vw - 123px, 140px)));
   }
 
-  .sponsor__logo--host {
-    height: clamp(56px, 7vw, 100px);
-    transform: translate(-12px, -16px);
+  .sponsor__content {
+    --sponsor-host-h: clamp(56px, 7vw, 100px);
+    --sponsor-host-lift: -16px;
+  }
+
+  .sponsor__host-col {
+    width: clamp(150px, 17vw, 240px);
+  }
+
+  .sponsor__count {
+    font-size: clamp(28px, 3.4vw, 52px);
   }
 }
 
 @media (max-width: 1024px) {
   .header {
-    padding: 20px 32px;
+    padding: 15px 32px;
   }
 
   .header__nav {
@@ -731,7 +807,7 @@ ul {
     left: 0;
     transform: none;
     max-width: none;
-    padding: 16px 20px;
+    padding: 12px 20px;
   }
 
   .header__inner {
@@ -741,7 +817,7 @@ ul {
   }
 
   .header__logo-img {
-    height: 44px;
+    height: 36px;
   }
 
   .header__menu-btn {
@@ -848,6 +924,13 @@ ul {
     margin-left: 0;
   }
 
+  .hero__desc {
+    /* 이 구간의 hero__info는 shift 없이 +4px만 내려가 있어 같은 기준을 쓴다. */
+    transform: translateY(4px);
+    margin-top: clamp(16px, 5vw, 26px);
+    font-size: clamp(11px, 1.6vw + 4px, 14px);
+  }
+
   .hero__icon-img {
     width: clamp(12px, 1.8vw + 4px, 16px);
     height: clamp(12px, 1.8vw + 4px, 16px);
@@ -889,6 +972,8 @@ ul {
 
   .sponsor__content {
     padding: 7% 10%;
+    --sponsor-host-h: clamp(36px, 7vw, 56px);
+    --sponsor-host-lift: 0px;
   }
 
   .sponsor__label {
@@ -899,9 +984,16 @@ ul {
     transform: none;
   }
 
-  .sponsor__logo--host {
-    height: clamp(36px, 7vw, 56px);
-    transform: none;
+  .sponsor__host-row {
+    gap: clamp(28px, 9vw, 64px);
+  }
+
+  .sponsor__host-col {
+    width: clamp(96px, 26vw, 150px);
+  }
+
+  .sponsor__count {
+    font-size: clamp(20px, 6vw, 34px);
   }
 
   .sponsor__logos {

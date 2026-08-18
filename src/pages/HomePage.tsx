@@ -48,6 +48,12 @@ export function HomePage() {
                   {EVENT.place}
                 </p>
               </div>
+
+              <p className="hero__desc">
+                UNICON은 매년 대학생 개발자들의 작품을 선보이는
+                <br />
+                국내 최대 규모의 대학생 게임 전시회입니다.
+              </p>
             </div>
           </main>
 

@@ -11,6 +11,9 @@ export const EVENT = {
   address: '경기도 성남시 분당구 대왕판교로645번길 12 1F KR 5F 경기창조경제혁신센터',
 } as const;
 
+/** 스폰서 박스에 표시하는 출품작 수. DB 등록 건수와 별개로 수동 관리한다. */
+export const WORK_COUNT = 86;
+
 /** 오시는 길 구글맵 임베드 URL (API 키 없이 동작하는 공개 임베드). */
 export const VENUE_MAP_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(
   EVENT.address,

@@ -16,6 +16,11 @@ export function useWorks(): State {
   const [state, setState] = useState<State>({ works: [], loading: true, error: null });
 
   useEffect(() => {
+    if (!supabase) {
+      setState({ works: [], loading: false, error: null });
+      return;
+    }
+
     let alive = true;
 
     supabase
