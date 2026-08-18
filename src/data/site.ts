@@ -48,7 +48,7 @@ export const SUPPORTERS: { name: string; logo: string | null; href: string | nul
   { name: '에피드게임즈', logo: '/images/sponsors/epidgames.png', href: 'https://www.epidgames.com/' },
   { name: '크래프톤', logo: '/images/sponsors/krafton.webp', href: 'https://www.krafton.com/' },
   { name: '한국모바일게임협회', logo: '/images/sponsors/kmga.png', href: 'https://www.k-mga.or.kr/' },
-  { name: '디벨로켓', logo: '/images/sponsors/develrocket.png', href: 'https://develrocket.com/' },
+  { name: '디벨로켓', logo: '/images/sponsors/develrocket.png', href: 'https://www.kiweb.or.kr/' },
   { name: '코그', logo: '/images/sponsors/kog.png', href: 'https://www.kog.co.kr/' },
   { name: '뒤끝', logo: '/images/sponsors/thebackend.png', href: 'https://www.thebackend.io/' },
   { name: '넥슨', logo: '/images/sponsors/nexon.png', href: 'https://www.nexon.com/' },
