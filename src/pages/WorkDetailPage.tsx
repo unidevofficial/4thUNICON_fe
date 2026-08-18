@@ -60,7 +60,7 @@ export function WorkDetailPage() {
   useBodyClass('works-page');
 
   useEffect(() => {
-    if (!id) {
+    if (!id || !supabase) {
       setState({ work: null, loading: false, error: null });
       return;
     }

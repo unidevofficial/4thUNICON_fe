@@ -1,6 +1,6 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent, type KeyboardEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getPublicUrl, supabase } from '../../lib/supabase';
+import { getPublicUrl, requireSupabase } from '../../lib/supabase';
 import { PLATFORM_OPTIONS, TEAM_TYPE_OPTIONS, type Platform, type TeamType } from '../../data/works';
 
 /**
@@ -10,7 +10,7 @@ import { PLATFORM_OPTIONS, TEAM_TYPE_OPTIONS, type Platform, type TeamType } fro
 async function uploadImage(folder: string, file: File): Promise<string> {
   const safeName = file.name.replace(/[^a-zA-Z0-9.]+/g, '-');
   const path = `${folder}/${crypto.randomUUID()}-${safeName}`;
-  const { error } = await supabase.storage
+  const { error } = await requireSupabase().storage
     .from('files')
     .upload(path, file, { cacheControl: '31536000', upsert: false });
   if (error) throw error;
@@ -44,7 +44,7 @@ export function AdminWorkFormPage() {
     let alive = true;
 
     void (async () => {
-      const { data, error: loadError } = await supabase
+      const { data, error: loadError } = await requireSupabase()
         .from('project_with_genres')
         .select('*')
         .eq('id', id)
@@ -128,7 +128,7 @@ export function AdminWorkFormPage() {
     setSubmitting(true);
     setError(null);
 
-    const { error: saveError } = await supabase.rpc('upsert_project', {
+    const { error: saveError } = await requireSupabase().rpc('upsert_project', {
       // p_id 를 넘기면 수정, 생략하면 신규 등록.
       ...(id ? { p_id: id } : {}),
       p_title: title.trim(),

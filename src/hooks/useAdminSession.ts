@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { requireSupabase, supabase } from '../lib/supabase';
 
 type AdminSession = {
   /** 로그인 여부 */
@@ -33,7 +33,7 @@ export function useAdminSession(): AdminSession {
         if (alive) setState({ signedIn: false, isAdmin: false, loading: false });
         return;
       }
-      const { data, error } = await supabase!.rpc('is_admin');
+      const { data, error } = await requireSupabase().rpc('is_admin');
       if (!alive) return;
       setState({ signedIn: true, isAdmin: !error && data === true, loading: false });
     }

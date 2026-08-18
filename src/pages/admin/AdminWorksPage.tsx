@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { requireSupabase } from '../../lib/supabase';
 import { teamTypeLabel, type Work } from '../../data/works';
 
 const ADMIN_LIST_COLUMNS = 'id, title, team_name, team_type, genres, created_at';
@@ -13,7 +13,7 @@ export function AdminWorksPage() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const { data, error: loadError } = await supabase
+    const { data, error: loadError } = await requireSupabase()
       .from('project_with_genres')
       .select(ADMIN_LIST_COLUMNS)
       .order('created_at', { ascending: false });
@@ -38,7 +38,7 @@ export function AdminWorksPage() {
 
     setDeletingId(work.id);
     // 반환값은 정리해야 할 Storage 경로 배열이다. 이걸 지우지 않으면 고아 파일이 남는다.
-    const { data: files, error: deleteError } = await supabase.rpc('delete_project', {
+    const { data: files, error: deleteError } = await requireSupabase().rpc('delete_project', {
       p_id: work.id,
     });
 
@@ -49,7 +49,7 @@ export function AdminWorksPage() {
     }
 
     if (files?.length) {
-      await supabase.storage.from('files').remove(files);
+      await requireSupabase().storage.from('files').remove(files);
     }
 
     setDeletingId(null);

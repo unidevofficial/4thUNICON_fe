@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { requireSupabase } from '../../lib/supabase';
 
 export function AdminLoginPage() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export function AdminLoginPage() {
     setSubmitting(true);
     setError(null);
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    const { error: signInError } = await requireSupabase().auth.signInWithPassword({ email, password });
     if (signInError) {
       setError('이메일 또는 비밀번호가 올바르지 않습니다.');
       setSubmitting(false);

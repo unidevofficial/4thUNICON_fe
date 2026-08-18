@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { requireSupabase } from '../../lib/supabase';
 import type { Tables } from '../../types/database.types';
 
 type Inquiry = Tables<'inquiry'>;
@@ -25,7 +25,7 @@ export function AdminInquiriesPage() {
     let alive = true;
 
     void (async () => {
-      const { data, error: loadError } = await supabase
+      const { data, error: loadError } = await requireSupabase()
         .from('inquiry')
         .select('*')
         .order('created_at', { ascending: false });
@@ -51,7 +51,7 @@ export function AdminInquiriesPage() {
       prev.map((item) => (item.id === inquiry.id ? { ...item, is_checked: next } : item)),
     );
 
-    const { error: updateError } = await supabase
+    const { error: updateError } = await requireSupabase()
       .from('inquiry')
       .update({ is_checked: next })
       .eq('id', inquiry.id);

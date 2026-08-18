@@ -1,11 +1,11 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { requireSupabase } from '../../lib/supabase';
 
 export function AdminLayout() {
   const navigate = useNavigate();
 
   async function handleSignOut() {
-    await supabase.auth.signOut();
+    await requireSupabase().auth.signOut();
     navigate('/admin/login', { replace: true });
   }
 
