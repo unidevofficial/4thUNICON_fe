@@ -24,8 +24,15 @@ export function requireSupabase() {
   return supabase;
 }
 
-/** Storage 경로(`banner/xxx.png`)를 공개 URL로 변환. 경로가 없으면 null. */
+/**
+ * Storage 경로(`banner/xxx.png`)를 공개 URL로 변환. 경로가 없으면 null.
+ *
+ * 이미지는 두 곳에 있다. 관리자 페이지에서 올린 것은 Storage에, 일괄 등록한 배너는
+ * 외부 CDN에 있다. DB에는 둘 다 같은 컬럼에 들어가므로 여기서 갈라준다.
+ */
 export function getPublicUrl(path: string | null | undefined): string | null {
-  if (!path || !supabase) return null;
+  if (!path) return null;
+  if (/^https?:\/\//.test(path)) return path;
+  if (!supabase) return null;
   return supabase.storage.from('files').getPublicUrl(path).data.publicUrl;
 }

@@ -48,8 +48,10 @@ export function AdminWorksPage() {
       return;
     }
 
-    if (files?.length) {
-      await requireSupabase().storage.from('files').remove(files);
+    // 외부 CDN 이미지는 Storage에 없으므로 제외한다.
+    const storagePaths = (files ?? []).filter((path) => !/^https?:\/\//.test(path));
+    if (storagePaths.length) {
+      await requireSupabase().storage.from('files').remove(storagePaths);
     }
 
     setDeletingId(null);

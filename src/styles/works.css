@@ -855,8 +855,12 @@ body:has(.about-intro) .works-bg::before {
   box-shadow: 0 8px 28px rgba(232, 67, 147, 0.12);
 }
 
+/*
+ * 배너는 대부분 16:9로 올라온다. 박스를 16:10으로 두면 cover가 좌우를 ~10% 잘라내
+ * 로고나 제목이 잘린 것처럼 보인다. 비율을 맞춰 크롭 없이 꼭짓점만 둥글게 깎이도록 한다.
+ */
 .works-card__thumb {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, #f062a0 0%, #e84393 50%, #d63384 100%);
   margin: clamp(10px, 1vw, 14px);
   border-radius: clamp(10px, 0.9vw, 14px);
