@@ -1000,16 +1000,17 @@ body:has(.about-intro) .works-bg::before {
     padding-top: 64px;
   }
 
+  /* 배지 폭·글자 크기를 같은 비율(약 +12%)로 키워야 SVG 안에서 글자가 넘치지 않는다. */
   .works-section__badge {
-    width: clamp(140px, 50.4vw, 203px);
+    width: clamp(157px, 56.4vw, 227px);
   }
 
   .works-section__badge-text {
-    font-size: clamp(15px, 4.55vw, 20px);
+    font-size: clamp(17px, 5.1vw, 22px);
   }
 
   .works-section__badge--wide {
-    width: clamp(140px, 50.4vw, 203px);
+    width: clamp(157px, 56.4vw, 227px);
   }
 
   /*
@@ -1061,9 +1062,15 @@ body:has(.about-intro) .works-bg::before {
     margin-inline: auto;
   }
 
-  /* 모바일 행사일정표: 기본 대비 약 +8% (3% 후 5% 추가) */
+  /*
+   * 모바일 행사일정표: 좌우 여백을 절반으로 줄이고 그만큼 표를 키운다.
+   * 375에서 여백 116px→58px(표 259→317), 768에서 336px→168px(표 432→600)이
+   * 되도록 두 지점을 잇는 직선(72vw + 47px)으로 잡았다.
+   * max-width는 이 폭을 자르지 않을 만큼만 올린다(기존 90%면 375에서 301px에 걸림).
+   */
   .overview-schedule-img {
-    width: clamp(259px, 56.24vw, 779px);
+    width: clamp(240px, 72vw + 47px, 779px);
+    max-width: 96%;
   }
 
   /* ── ABOUT 모바일: 푸터 바 스케일에 맞게 축소 ── */

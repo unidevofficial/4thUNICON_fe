@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ImageFrame } from '../components/ImageFrame';
 import { SectionBadge } from '../components/SectionBadge';
@@ -18,6 +18,59 @@ import { getPublicUrl } from '../lib/supabase';
 
 /** 이 수 이하면 아직 등록이 진행 중이라고 보고 목록 아래에 안내를 덧붙인다. */
 const PARTIAL_WORKS_THRESHOLD = 50;
+
+/**
+ * 썸네일을 뷰포트 진입 전 얼마나 앞서 받아둘지. 카드 한 장 높이가 대략 380px이라
+ * 800px이면 두 줄 정도를 미리 확보해 스크롤 중 배경만 보이는 순간이 거의 없다.
+ * (0으로 두면 화면에 들어온 뒤 받기 시작해 매번 전환이 눈에 띈다.)
+ */
+const THUMB_PRELOAD_MARGIN = '800px 0px';
+
+/**
+ * 참가작 썸네일. 52장을 한 번에 받으면 첫 화면이 느려져서
+ * 화면 근처에 온 것만 background-image를 붙인다.
+ * 붙이기 전에는 카드 CSS의 분홍 그라데이션이 그대로 자리를 지킨다.
+ */
+function WorkThumb({ src }: { src: string | null }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    // 한 번 띄운 뒤에는 필터로 카드가 재배치돼도 다시 감시하지 않는다.
+    if (!src || shown) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShown(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: THUMB_PRELOAD_MARGIN },
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [src, shown]);
+
+  return (
+    <div
+      ref={ref}
+      className="works-card__thumb"
+      style={
+        src && shown
+          ? {
+              backgroundImage: `url(${src})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }
+          : undefined
+      }
+    />
+  );
+}
 
 function sortWorks(works: Work[], sort: SortValue, order: Map<string, number>): Work[] {
   const sorted = [...works];
@@ -191,18 +244,7 @@ export function WorksPage() {
                   className="works-card"
                   aria-label={`${work.title ?? '참가 작품'} 상세 페이지로 이동`}
                 >
-                  <div
-                    className="works-card__thumb"
-                    style={
-                      thumbnail
-                        ? {
-                            backgroundImage: `url(${thumbnail})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                          }
-                        : undefined
-                    }
-                  />
+                  <WorkThumb src={thumbnail} />
                   <div className="works-card__body">
                     <h2 className="works-card__title">{work.title ?? '제목 미정'}</h2>
                     <p className="works-card__team">
