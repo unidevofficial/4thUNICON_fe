@@ -111,6 +111,7 @@ export type Database = {
           gallery_images: string[] | null
           id: string
           platform: string[] | null
+          sheet_no: number | null
           team_name: string | null
           team_type: string
           title: string
@@ -125,6 +126,7 @@ export type Database = {
           gallery_images?: string[] | null
           id?: string
           platform?: string[] | null
+          sheet_no?: number | null
           team_name?: string | null
           team_type: string
           title: string
@@ -139,6 +141,7 @@ export type Database = {
           gallery_images?: string[] | null
           id?: string
           platform?: string[] | null
+          sheet_no?: number | null
           team_name?: string | null
           team_type?: string
           title?: string
@@ -202,6 +205,7 @@ export type Database = {
           genres: string[] | null
           id: string | null
           platform: string[] | null
+          sheet_no: number | null
           team_name: string | null
           team_type: string | null
           title: string | null
@@ -224,6 +228,7 @@ export type Database = {
           p_genres?: string[]
           p_id?: string
           p_platform?: string[]
+          p_sheet_no?: number
           p_team_name?: string
           p_team_type: string
           p_title: string

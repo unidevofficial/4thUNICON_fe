@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { requireSupabase } from '../../lib/supabase';
 import { teamTypeLabel, type Work } from '../../data/works';
 
-const ADMIN_LIST_COLUMNS = 'id, title, team_name, team_type, genres, created_at';
+const ADMIN_LIST_COLUMNS = 'id, sheet_no, title, team_name, team_type, genres, created_at';
 
 export function AdminWorksPage() {
   const [works, setWorks] = useState<Work[]>([]);
@@ -77,6 +77,7 @@ export function AdminWorksPage() {
         <table className="admin-table">
           <thead>
             <tr>
+              <th>순번</th>
               <th>제목</th>
               <th>팀</th>
               <th>부문</th>
@@ -87,6 +88,7 @@ export function AdminWorksPage() {
           <tbody>
             {works.map((work) => (
               <tr key={work.id}>
+                <td>{work.sheet_no ?? '-'}</td>
                 <td>{work.title ?? '-'}</td>
                 <td>{work.team_name ?? '-'}</td>
                 <td>{teamTypeLabel(work.team_type)}</td>

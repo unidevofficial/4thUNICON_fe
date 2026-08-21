@@ -84,4 +84,4 @@ export const ABOUT_EXTERNAL_LINKS: { label: string; href: string | null }[] = [
 ];
 
 /** null 로 두면 참가작품 페이지에 플레이스홀더가 대신 표시된다. */
-export const BOOTH_MAP_IMAGE: string | null = '/images/blueprint.png';
+export const BOOTH_MAP_IMAGE: string | null = '/images/booth_map.png';
