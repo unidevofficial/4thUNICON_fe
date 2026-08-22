@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { requireSupabase, supabase } from '../lib/supabase';
 
 type AdminSession = {
@@ -19,6 +19,8 @@ export function useAdminSession(): AdminSession {
     isAdmin: false,
     loading: true,
   });
+  /** 마지막으로 판정한 로그인 여부. state는 비동기라 이벤트 비교에 쓸 수 없다. */
+  const signedInRef = useRef<boolean | null>(null);
 
   useEffect(() => {
     if (!supabase) {
@@ -29,6 +31,7 @@ export function useAdminSession(): AdminSession {
     let alive = true;
 
     async function resolve(signedIn: boolean) {
+      signedInRef.current = signedIn;
       if (!signedIn) {
         if (alive) setState({ signedIn: false, isAdmin: false, loading: false });
         return;
@@ -44,8 +47,17 @@ export function useAdminSession(): AdminSession {
 
     // 로그인/로그아웃 후 가드가 즉시 반영되도록 구독한다.
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      const next = Boolean(session);
+      /*
+       * supabase는 탭이 다시 보일 때(visibilitychange)와 토큰 갱신 때도
+       * SIGNED_IN을 재통지한다. 그때마다 loading을 켜면 AdminGuard가 children을
+       * 언마운트해서 작성 중이던 폼 입력까지 날아간다. 로그인 여부가 실제로
+       * 바뀐 경우에만 다시 판정한다.
+       */
+      if (signedInRef.current === next) return;
+
       setState((prev) => ({ ...prev, loading: true }));
-      void resolve(Boolean(session));
+      void resolve(next);
     });
 
     return () => {

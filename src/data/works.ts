@@ -53,15 +53,32 @@ export function collectGenres(works: Work[]): string[] {
   return [...seen].sort((a, b) => a.localeCompare(b, 'ko'));
 }
 
+/** mulberry32. 시드가 같으면 항상 같은 수열을 낸다. */
+function createRandom(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 /**
- * Fisher-Yates. 원본 배열은 건드리지 않는다.
- * 서버 `order by random()`은 요청마다 순서가 바뀌어 필터를 바꿀 때마다 카드가 뒤섞이므로,
- * 클라이언트에서 한 번만 섞어 세션 내내 고정한다.
+ * 시드 기반 Fisher-Yates. 원본 배열은 건드리지 않는다.
+ *
+ * 서버 `order by random()`은 요청마다 순서가 바뀌고, Math.random 셔플은 상세 페이지를
+ * 갔다 오면 컴포넌트가 다시 마운트되며 순서가 뒤집힌다. 시드를 저장해 두면 같은 목록에
+ * 대해 항상 같은 순서가 나온다.
+ *
+ * 서버 응답 순서 자체가 달라져도 결과가 같도록 id로 먼저 정규화한 뒤 섞는다.
  */
-export function shuffle<T>(items: T[]): T[] {
-  const result = [...items];
+export function seededShuffle<T extends { id: string | null }>(items: T[], seed: number): T[] {
+  const result = [...items].sort((a, b) => (a.id ?? '').localeCompare(b.id ?? ''));
+  const random = createRandom(seed);
   for (let i = result.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(random() * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;

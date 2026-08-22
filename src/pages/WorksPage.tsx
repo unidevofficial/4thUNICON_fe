@@ -8,7 +8,7 @@ import {
   SORT_OPTIONS,
   TEAM_TYPE_OPTIONS,
   collectGenres,
-  shuffle,
+  seededShuffle,
   teamTypeLabel,
   type SortValue,
   type Work,
@@ -25,6 +25,29 @@ const PARTIAL_WORKS_THRESHOLD = 50;
  * (0으로 두면 화면에 들어온 뒤 받기 시작해 매번 전환이 눈에 띈다.)
  */
 const THUMB_PRELOAD_MARGIN = '800px 0px';
+
+/**
+ * 정렬 방식과 랜덤 시드는 탭이 살아있는 동안 유지한다.
+ * 상세 페이지를 갔다 오면 WorksPage가 다시 마운트되므로, state만으로는
+ * 정렬이 초기화되고 랜덤 순서도 새로 섞인다. localStorage가 아닌 session인 이유는
+ * 다음에 새로 방문했을 때는 다시 랜덤이어야 하기 때문.
+ */
+const SORT_STORAGE_KEY = 'works:sort';
+const SEED_STORAGE_KEY = 'works:seed';
+
+function readStoredSort(): SortValue {
+  const saved = sessionStorage.getItem(SORT_STORAGE_KEY);
+  return SORT_OPTIONS.some((option) => option.value === saved) ? (saved as SortValue) : 'random';
+}
+
+function readStoredSeed(): number {
+  const saved = Number(sessionStorage.getItem(SEED_STORAGE_KEY));
+  if (Number.isFinite(saved) && saved > 0) return saved;
+
+  const seed = Math.floor(Math.random() * 2 ** 32) || 1;
+  sessionStorage.setItem(SEED_STORAGE_KEY, String(seed));
+  return seed;
+}
 
 /**
  * 참가작 썸네일. 52장을 한 번에 받으면 첫 화면이 느려져서
@@ -91,17 +114,18 @@ export function WorksPage() {
   const [keyword, setKeyword] = useState('');
   const [genre, setGenre] = useState('');
   const [teamType, setTeamType] = useState('');
-  const [sort, setSort] = useState<SortValue>('random');
+  const [sort, setSort] = useState<SortValue>(readStoredSort);
+  const [seed] = useState(readStoredSeed);
 
   // 장르 옵션은 목록 응답에서 뽑는다 (genre 테이블 별도 조회 불필요)
   const genreOptions = useMemo(() => collectGenres(works), [works]);
 
-  // 랜덤 순서는 데이터를 받은 시점에 한 번만 정하고 이후 고정
+  // 시드가 같으면 목록이 같은 한 순서도 같다 (상세를 갔다 와도 유지)
   const randomOrder = useMemo(() => {
     const map = new Map<string, number>();
-    shuffle(works).forEach((work, index) => map.set(work.id ?? '', index));
+    seededShuffle(works, seed).forEach((work, index) => map.set(work.id ?? '', index));
     return map;
-  }, [works]);
+  }, [works, seed]);
 
   const visibleWorks = useMemo(() => {
     const q = keyword.trim().toLowerCase();
@@ -198,7 +222,11 @@ export function WorksPage() {
                 id="filter-sort"
                 className="works-filter__select"
                 value={sort}
-                onChange={(event) => setSort(event.target.value as SortValue)}
+                onChange={(event) => {
+                  const next = event.target.value as SortValue;
+                  setSort(next);
+                  sessionStorage.setItem(SORT_STORAGE_KEY, next);
+                }}
               >
                 {SORT_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
