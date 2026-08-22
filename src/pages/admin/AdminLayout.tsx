@@ -19,6 +19,9 @@ export function AdminLayout() {
           <NavLink to="/admin/inquiries" className="admin__nav-link">
             문의 관리
           </NavLink>
+          <NavLink to="/admin/comment-orgs" className="admin__nav-link">
+            단체 코드 관리
+          </NavLink>
         </nav>
         <div className="admin__actions">
           <Link to="/" className="admin-button admin-button--ghost">

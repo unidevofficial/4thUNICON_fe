@@ -30,15 +30,23 @@ function toPin(value: string): string {
 }
 
 export function WorkComments({ projectId }: { projectId: string }) {
-  const { session } = useCommentMode();
+  const { session, deactivate } = useCommentMode();
 
   // 코드가 없으면 섹션 자체를 렌더링하지 않는다.
   if (!session) return null;
 
-  return <CommentsPanel projectId={projectId} session={session} />;
+  return <CommentsPanel projectId={projectId} session={session} onInvalidCode={deactivate} />;
 }
 
-function CommentsPanel({ projectId, session }: { projectId: string; session: CommentSession }) {
+function CommentsPanel({
+  projectId,
+  session,
+  onInvalidCode,
+}: {
+  projectId: string;
+  session: CommentSession;
+  onInvalidCode: () => void;
+}) {
   const [comments, setComments] = useState<CommentRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -64,6 +72,12 @@ function CommentsPanel({ projectId, session }: { projectId: string; session: Com
       });
 
       if (error) {
+        // 관리자가 코드를 바꾸거나 단체를 비활성화하면 저장된 세션이 무효가 된다.
+        // 이 경우 계속 실패 문구만 띄우지 말고 세션을 닫아 다시 입력하게 한다.
+        if (error.code === '28000') {
+          onInvalidCode();
+          return;
+        }
         setLoadError('코멘트를 불러오지 못했습니다.');
         setComments([]);
         setTotal(0);
@@ -75,7 +89,7 @@ function CommentsPanel({ projectId, session }: { projectId: string; session: Com
       }
       setLoading(false);
     },
-    [projectId, session.code],
+    [projectId, session.code, onInvalidCode],
   );
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { OverviewPage } from './pages/OverviewPage';
 import { WorkDetailPage } from './pages/WorkDetailPage';
 import { WorksPage } from './pages/WorksPage';
+import { AdminCommentOrgsPage } from './pages/admin/AdminCommentOrgsPage';
 import { AdminInquiriesPage } from './pages/admin/AdminInquiriesPage';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
@@ -37,6 +38,7 @@ export function App() {
           <Route path="works/new" element={<AdminWorkFormPage />} />
           <Route path="works/:id" element={<AdminWorkFormPage />} />
           <Route path="inquiries" element={<AdminInquiriesPage />} />
+          <Route path="comment-orgs" element={<AdminCommentOrgsPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

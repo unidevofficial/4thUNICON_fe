@@ -233,6 +233,27 @@ export type Database = {
         Returns: undefined
       }
       delete_project: { Args: { p_id: string }; Returns: string[] }
+      admin_list_comment_orgs: {
+        Args: never
+        Returns: {
+          id: string
+          name: string
+          code: string
+          is_active: boolean
+          comment_count: number
+          created_at: string
+        }[]
+      }
+      admin_upsert_comment_org: {
+        Args: {
+          p_code: string
+          p_id?: string
+          p_is_active?: boolean
+          p_name: string
+        }
+        Returns: string
+      }
+      admin_delete_comment_org: { Args: { p_id: string }; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
       list_comments: {
         Args: {

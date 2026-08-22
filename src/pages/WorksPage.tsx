@@ -87,7 +87,7 @@ function WorkThumb({ src }: { src: string | null }) {
         src && shown
           ? {
               backgroundImage: `url(${src})`,
-              backgroundSize: 'cover',
+              backgroundSize: 'contain',
               backgroundPosition: 'center',
             }
           : undefined
