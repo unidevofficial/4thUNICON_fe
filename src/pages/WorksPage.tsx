@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CommentModeToggle } from '../components/CommentModeToggle';
 import { ImageFrame } from '../components/ImageFrame';
 import { SectionBadge } from '../components/SectionBadge';
 import { SubPageLayout } from '../components/SubPageLayout';
@@ -164,7 +165,7 @@ export function WorksPage() {
 
       {/* ── 참가 작품 ── */}
       <section className="works-section works-section--list" id="works-list">
-        <SectionBadge>참가 작품</SectionBadge>
+        <CommentModeToggle>참가 작품</CommentModeToggle>
 
         <div className="works-filters">
           <div className="works-search">

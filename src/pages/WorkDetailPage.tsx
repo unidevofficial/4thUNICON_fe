@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
+import { WorkComments } from '../components/WorkComments';
 import { PLATFORM_OPTIONS, teamTypeLabel, type Work } from '../data/works';
 import { useBodyClass } from '../hooks/useBodyClass';
 import { getPublicUrl, supabase } from '../lib/supabase';
@@ -251,6 +252,8 @@ export function WorkDetailPage() {
                       <p className="work-detail__media-empty">등록된 갤러리 이미지가 없습니다.</p>
                     )}
                   </section>
+
+                  {work.id ? <WorkComments projectId={work.id} /> : null}
                 </div>
               </div>
             </article>

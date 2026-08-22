@@ -217,8 +217,55 @@ export type Database = {
       }
     }
     Functions: {
+      add_comment: {
+        Args: {
+          p_code: string
+          p_content: string
+          p_edit_pin?: string
+          p_hide_org?: boolean
+          p_job_title?: string
+          p_project_id: string
+        }
+        Returns: { edit_pin: string; id: string }[]
+      }
+      delete_comment: {
+        Args: { p_code: string; p_comment_id: string; p_edit_pin: string }
+        Returns: undefined
+      }
       delete_project: { Args: { p_id: string }; Returns: string[] }
       is_admin: { Args: never; Returns: boolean }
+      list_comments: {
+        Args: {
+          p_code: string
+          p_page?: number
+          p_page_size?: number
+          p_project_id: string
+        }
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          is_edited: boolean
+          job_title: string | null
+          org_name: string | null
+          total_count: number
+        }[]
+      }
+      update_comment: {
+        Args: {
+          p_code: string
+          p_comment_id: string
+          p_content: string
+          p_edit_pin: string
+          p_hide_org?: boolean
+          p_job_title?: string
+        }
+        Returns: undefined
+      }
+      verify_comment_code: {
+        Args: { p_code: string }
+        Returns: { org_id: string; org_name: string }[]
+      }
       upsert_project: {
         Args: {
           p_banner_image?: string

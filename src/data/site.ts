@@ -32,7 +32,7 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { label: 'UNICON', to: '/#unicon' },
   { label: '행사 개요', to: '/overview' },
-  { label: '참가작품', to: '/works' },
+  { label: '참가 작품', to: '/works' },
   { label: 'UNIDEV 소개', to: '/about' },
 ];
 
